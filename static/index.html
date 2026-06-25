@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QueryMind — Agentic Business Intelligence Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080C18;--bg2:#0D1228;--bg3:#111827;
+  --glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.12);
+  --indigo:#6C63FF;--indigo2:#8B84FF;--indigo-glow:rgba(108,99,255,0.25);
+  --cyan:#00D4FF;--cyan-glow:rgba(0,212,255,0.15);
+  --green:#00E5A0;--warn:#FFB547;--red:#FF6B6B;
+  --text:#F0F4FF;--text2:rgba(240,244,255,0.65);--text3:rgba(240,244,255,0.35);
+  --radius:14px;--radius2:10px;--radius3:20px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.app{position:relative;z-index:1;display:flex;min-height:100vh}
+
+.sidebar{
+  width:280px;flex-shrink:0;background:rgba(8,12,24,0.9);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;
+  transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);z-index:100;overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+.logo-area{padding:26px 24px 20px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+
+.logo-icon{
+  width:46px;height:46px;border-radius:14px;flex-shrink:0;position:relative;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  box-shadow:0 0 24px var(--indigo-glow);
+  display:flex;align-items:center;justify-content:center;padding:8px;
+  animation:logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 24px var(--indigo-glow)}50%{box-shadow:0 0 40px var(--indigo-glow),0 0 60px var(--cyan-glow)}}
+.logo-icon svg{position:absolute;inset:0;width:100%;height:100%;padding:7px}
+
+.logo-name{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,#00D4FF,#8B84FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-tag{font-size:10.5px;color:var(--text3);letter-spacing:0.8px;text-transform:uppercase;margin-top:1px}
+
+.sidebar-body{padding:20px 16px;flex:1}
+.s-label{font-size:10px;font-weight:600;letter-spacing:1.8px;color:var(--text3);text-transform:uppercase;padding:0 8px;margin-bottom:10px;display:block}
+
+.upload-zone{
+  border:1.5px dashed var(--border2);border-radius:var(--radius);padding:22px 16px;text-align:center;
+  cursor:pointer;background:var(--glass);margin-bottom:18px;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden;
+}
+.upload-zone::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--indigo-glow),var(--cyan-glow));
+  opacity:0;transition:opacity 0.3s ease;border-radius:var(--radius)}
+.upload-zone:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 12px 32px rgba(108,99,255,0.15)}
+.upload-zone:hover::before{opacity:1}
+.upload-zone input{display:none}
+.upload-icon{font-size:26px;margin-bottom:10px;display:block;transition:transform 0.3s ease}
+.upload-zone:hover .upload-icon{transform:translateY(-4px) scale(1.1)}
+.upload-text{font-size:12px;color:var(--text2);line-height:1.6;position:relative;z-index:1}
+.upload-text strong{color:var(--indigo);font-weight:600}
+
+.file-status{display:flex;align-items:center;gap:10px;background:rgba(0,229,160,0.08);
+  border:1px solid rgba(0,229,160,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;
+  animation:slideIn 0.4s ease forwards}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:dotPulse 2s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,160,0.4)}70%{box-shadow:0 0 0 6px rgba(0,229,160,0)}}
+.status-info{flex:1;min-width:0}
+.status-name{font-size:12px;font-weight:600;color:var(--green);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-meta{font-size:10px;color:var(--text3);margin-top:1px}
+
+.stats-row{display:flex;gap:8px;margin-bottom:18px}
+.stat-pill{flex:1;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;transition:all 0.25s ease}
+.stat-pill:hover{background:var(--glass2);border-color:var(--indigo);transform:translateY(-2px)}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--indigo)}
+.stat-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+
+.s-divider{height:1px;background:var(--border);margin:16px 0}
+
+.ex-btn{width:100%;text-align:left;background:var(--glass);border:1px solid var(--border);
+  border-radius:10px;padding:10px 13px;color:var(--text2);font-size:12px;font-family:'Inter',sans-serif;
+  cursor:pointer;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.ex-btn::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(108,99,255,0.08),transparent);
+  transform:translateX(-100%);transition:transform 0.4s ease}
+.ex-btn:hover{background:var(--glass2);border-color:rgba(108,99,255,0.3);color:var(--text);transform:translateX(4px)}
+.ex-btn:hover::after{transform:translateX(100%)}
+.ex-icon{color:var(--indigo);font-size:13px;flex-shrink:0}
+
+.clear-btn{width:100%;padding:10px;border-radius:10px;background:rgba(255,107,107,0.06);
+  border:1px solid rgba(255,107,107,0.15);color:rgba(255,107,107,0.7);font-size:12px;
+  font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.25s ease;margin-top:8px}
+.clear-btn:hover{background:rgba(255,107,107,0.12);border-color:rgba(255,107,107,0.3);color:var(--red)}
+
+.credit-foot{padding:16px 20px;border-top:1px solid var(--border);text-align:center;
+  font-size:10px;color:var(--text3);letter-spacing:0.3px;line-height:1.6}
+.credit-foot strong{color:var(--indigo2);font-weight:600}
+
+.main{flex:1;margin-left:280px;display:flex;flex-direction:column;min-height:100vh}
+
+.topbar{padding:18px 32px;background:rgba(8,12,24,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;
+  background:linear-gradient(135deg,var(--text),var(--indigo2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.topbar-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.topbar-badges{display:flex;gap:8px;align-items:center}
+.badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.3px;border:1px solid}
+.badge-indigo{background:rgba(108,99,255,0.12);border-color:rgba(108,99,255,0.25);color:var(--indigo2)}
+.badge-green{background:rgba(0,229,160,0.1);border-color:rgba(0,229,160,0.25);color:var(--green);display:flex;align-items:center;gap:5px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:dotPulse 2s infinite}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 32px 0}
+.kpi-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius2);
+  padding:14px 16px;transition:all 0.3s ease;animation:cardIn 0.5s ease forwards;opacity:0}
+.kpi-card:nth-child(1){animation-delay:0.05s}.kpi-card:nth-child(2){animation-delay:0.1s}
+.kpi-card:nth-child(3){animation-delay:0.15s}.kpi-card:nth-child(4){animation-delay:0.2s}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.kpi-card:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,0.1)}
+.kpi-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px}
+.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--indigo2)}
+
+.chat-area{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:18px}
+.chat-area::-webkit-scrollbar{width:4px}
+.chat-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 32px;animation:fadeUp 0.6s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.empty-orb{width:110px;height:110px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:orbFloat 4s ease-in-out infinite}
+.empty-orb svg{width:100px;height:100px}
+@keyframes orbFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.empty-title{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;
+  background:linear-gradient(135deg,var(--text),var(--indigo2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.empty-sub{color:var(--text2);font-size:15px;max-width:440px;line-height:1.7;margin-bottom:36px}
+
+.feature-grid{display:flex;gap:14px;max-width:100%;width:100%;overflow-x:auto;padding-bottom:10px}
+.feature-grid::-webkit-scrollbar{height:4px}
+.feature-grid::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.feature-card{
+  flex:1;min-width:160px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 14px;text-align:center;position:relative;overflow:hidden;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);cursor:default;
+  animation:cardRise 0.6s cubic-bezier(0.16,1,0.3,1) forwards;opacity:0;
+}
+.feature-card:nth-child(1){animation-delay:0.05s}
+.feature-card:nth-child(2){animation-delay:0.12s}
+.feature-card:nth-child(3){animation-delay:0.19s}
+.feature-card:nth-child(4){animation-delay:0.26s}
+.feature-card:nth-child(5){animation-delay:0.33s}
+.feature-card:nth-child(6){animation-delay:0.4s}
+@keyframes cardRise{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.feature-card::before{
+  content:'';position:absolute;inset:0;border-radius:var(--radius);
+  background:linear-gradient(135deg,rgba(108,99,255,0.15),rgba(0,212,255,0.08));
+  opacity:0;transition:opacity 0.35s ease;
+}
+.feature-card:hover{transform:translateY(-8px);border-color:rgba(108,99,255,0.4);box-shadow:0 20px 48px rgba(108,99,255,0.18)}
+.feature-card:hover::before{opacity:1}
+.f-icon{font-size:20px;margin-bottom:10px;display:inline-block;position:relative;z-index:1;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1)}
+.feature-card:hover .f-icon{transform:scale(1.2) rotate(-6deg)}
+.f-title{font-size:13px;font-weight:600;margin-bottom:5px;position:relative;z-index:1}
+.f-desc{font-size:11px;color:var(--text2);line-height:1.5;position:relative;z-index:1}
+.f-pulse{position:absolute;bottom:10px;right:10px;width:6px;height:6px;border-radius:50%;background:var(--green);opacity:0}
+.feature-card:hover .f-pulse{opacity:1;animation:ping 1.5s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(0,229,160,0.5)}100%{box-shadow:0 0 0 8px rgba(0,229,160,0)}}
+
+.msg{display:flex;gap:12px;animation:msgIn 0.4s cubic-bezier(0.4,0,0.2,1) forwards;opacity:0}
+@keyframes msgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.avatar{width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:transform 0.2s ease;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.avatar:hover{transform:scale(1.1)}
+.avatar.ai-av{background:linear-gradient(135deg,var(--indigo),var(--cyan));box-shadow:0 4px 16px var(--indigo-glow);color:#080C18}
+.avatar.user-av{background:var(--glass2);border:1px solid var(--border2)}
+.bubble{max-width:70%;padding:14px 18px;border-radius:18px;font-size:13.5px;line-height:1.7;transition:box-shadow 0.3s ease,transform 0.2s ease}
+.bubble:hover{transform:translateY(-1px)}
+.bubble.ai-b{background:var(--glass);border:1px solid var(--border);border-top-left-radius:4px}
+.bubble.ai-b:hover{box-shadow:0 8px 32px rgba(0,0,0,0.3);border-color:var(--border2)}
+.bubble.user-b{background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(0,212,255,0.08));border:1px solid rgba(108,99,255,0.25);border-top-right-radius:4px}
+.bubble.user-b:hover{box-shadow:0 8px 32px rgba(108,99,255,0.15)}
+.bubble strong{color:var(--indigo2)}
+.bubble code{background:rgba(108,99,255,0.15);padding:2px 6px;border-radius:5px;font-size:12px;color:var(--cyan)}
+
+.chart-wrap{margin-top:12px;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:all 0.3s ease}
+.chart-wrap:hover{box-shadow:0 16px 48px rgba(0,0,0,0.5);transform:translateY(-2px)}
+.chart-wrap img{width:100%;display:block}
+
+.typing-bubble{background:var(--glass);border:1px solid var(--border);border-radius:18px;border-top-left-radius:4px;padding:14px 18px}
+.typing{display:flex;gap:5px;align-items:center}
+.typing span{width:8px;height:8px;border-radius:50%;background:var(--indigo);animation:typeBounce 1.3s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:0.18s;background:var(--cyan)}
+.typing span:nth-child(3){animation-delay:0.36s;background:var(--cyan)}
+@keyframes typeBounce{0%,60%,100%{transform:translateY(0);opacity:0.5}30%{transform:translateY(-8px);opacity:1}}
+
+.input-area{padding:16px 32px 24px;background:rgba(8,12,24,0.9);backdrop-filter:blur(20px);border-top:1px solid var(--border)}
+.input-box{display:flex;align-items:flex-end;gap:10px;background:var(--glass2);border:1px solid var(--border2);
+  border-radius:18px;padding:12px 12px 12px 20px;transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+.input-box:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-glow),0 12px 40px rgba(108,99,255,0.1)}
+.chat-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;resize:none;line-height:1.6;max-height:130px;min-height:24px}
+.chat-input::placeholder{color:var(--text3)}
+.send-btn{width:42px;height:42px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:all 0.25s cubic-bezier(0.4,0,0.2,1);box-shadow:0 4px 20px var(--indigo-glow);position:relative;overflow:hidden}
+.send-btn:hover{transform:scale(1.08) rotate(-3deg);box-shadow:0 8px 32px var(--indigo-glow)}
+.input-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:10px}
+
+.toast{position:fixed;top:20px;right:20px;z-index:999;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:12px;padding:12px 18px;font-size:13px;box-shadow:0 16px 48px rgba(0,0,0,0.5);
+  animation:toastIn 0.4s ease forwards;max-width:300px}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.toast.success{border-color:rgba(0,229,160,0.3);color:var(--green)}
+.toast.error{border-color:rgba(255,107,107,0.3);color:var(--red)}
+
+.loader{position:fixed;inset:0;z-index:200;background:rgba(8,12,24,0.8);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.loader-ring{width:48px;height:48px;border-radius:50%;border:3px solid var(--border2);border-top-color:var(--indigo);animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-text{font-size:13px;color:var(--text2)}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .bubble{max-width:88%}
+  .feature-card{min-width:140px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-area">
+      <div class="logo">
+        <div class="logo-icon"><svg viewBox="0 0 190 165" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M98 16 C80 16 64 25 58 37 C44 36 32 46 30 58 C18 60 10 70 10 82 C10 90 14 96 21 100 C14 104 10 111 10 118 C10 131 21 140 35 138 C37 147 47 154 58 154 C63 154 67 152 70 150 C76 156 86 158 95 156 L98 156 Z" fill="#FFFFFF"/><path d="M58 37 C53 49 53 60 60 70 M30 58 C39 63 44 73 41 82 M21 100 C33 97 42 104 41 113 M35 138 C44 131 55 134 60 143" stroke="#3D2FD9" stroke-width="5" stroke-linecap="round" fill="none"/><defs><clipPath id="rightHemiClip"><ellipse cx="140" cy="84" rx="38" ry="68"/></clipPath></defs><g clip-path="url(#rightHemiClip)"><line x1="145.2" y1="145.1" x2="129.9" y2="139.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="107.0" y2="59.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="159.3" y2="133.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="141.1" y2="36.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="134.0" y2="21.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="139.9" y2="57.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="146.0" y2="134.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="112.8" y2="81.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="130.6" y1="72.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="141.1" y2="36.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.2" y1="23.8" x2="156.4" y2="36.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="150.5" y2="125.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="150.1" y2="32.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="111.8" y2="62.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="156.4" y2="36.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="129.9" y2="139.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="149.8" y2="34.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="156.4" y2="36.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="159.3" y2="133.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="149.9" y2="65.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.8" y2="121.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="111.8" y2="62.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="110.9" y2="85.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="162.7" y2="73.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="162.7" y2="73.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="79.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="151.1" y2="112.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.4" y1="36.1" x2="149.8" y2="34.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="153.1" y2="72.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="132.2" y1="113.3" x2="130.8" y2="95.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="140.4" y2="97.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="148.0" y2="86.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="144.4" y2="143.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="109.6" y2="71.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.7" y2="120.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="115.1" y2="76.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="111.8" y1="62.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.3" y1="96.2" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="151.1" y2="112.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="114.4" y2="93.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="144.6" y2="46.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="110.8" y1="116.3" x2="108.1" y2="104.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="161.3" y2="113.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="139.9" y2="57.8" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="110.9" y2="85.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="149.9" y2="65.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="139.9" y2="57.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="149.9" y2="65.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="121.3" y2="77.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="146.0" y2="134.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="107.0" y2="59.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.4" y1="143.8" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="144.6" y2="46.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="171.7" y2="66.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="83.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="134.0" y2="21.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.0" y2="110.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="159.3" y1="133.5" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="159.3" y2="133.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.2" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="163.3" y2="119.0" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="172.0" y1="77.3" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="144.4" y2="143.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="140.4" y2="97.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.6" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="130.6" y2="72.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.0" y1="59.7" x2="111.8" y2="62.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="141.1" y2="36.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="114.4" y2="93.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.6" y2="113.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="112.8" y2="81.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="83.2" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="118.7" y2="83.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="125.6" y2="71.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="145.5" y2="53.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.9" y1="57.8" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="111.8" y2="62.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="156.8" y2="81.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="172.0" y2="77.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="139.9" y2="57.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="127.2" y2="23.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="139.0" y2="110.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="145.5" y2="53.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="111.8" y2="62.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="172.0" y2="77.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="118.7" y2="83.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="145.2" y2="114.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="133.6" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="132.7" y2="120.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="110.9" y2="85.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="125.6" y2="71.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="114.9" y2="89.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="134.0" y1="21.7" x2="151.2" y2="23.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="172.0" y2="77.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="132.7" y1="120.9" x2="133.8" y2="121.4" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="141.1" y2="36.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="159.3" y2="133.5" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="161.3" y2="86.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="122.6" y2="55.5" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.8" y1="121.4" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="151.2" y2="23.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="133.8" y2="121.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="110.9" y2="85.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="151.1" y2="112.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="153.1" y2="72.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="156.4" y2="36.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><circle cx="131.9" cy="113.8" r="2.0" fill="#6C63FF"/><circle cx="137.1" cy="23.9" r="2.5" fill="#00D4FF"/><circle cx="118.0" cy="83.0" r="3.0" fill="#00E5A0"/><circle cx="151.7" cy="124.9" r="3.5" fill="#FFB547"/><circle cx="127.2" cy="23.1" r="2.0" fill="#FF6B6B"/><circle cx="113.5" cy="76.4" r="2.5" fill="#6C63FF"/><circle cx="145.2" cy="145.1" r="3.0" fill="#00D4FF"/><circle cx="114.9" cy="89.7" r="3.5" fill="#00E5A0"/><circle cx="138.9" cy="117.6" r="2.0" fill="#FFB547"/><circle cx="150.9" cy="78.5" r="2.5" fill="#FF6B6B"/><circle cx="112.8" cy="81.7" r="3.0" fill="#6C63FF"/><circle cx="126.5" cy="79.9" r="3.5" fill="#00D4FF"/><circle cx="126.0" cy="129.6" r="2.0" fill="#00E5A0"/><circle cx="159.0" cy="57.3" r="2.5" fill="#FFB547"/><circle cx="143.0" cy="52.1" r="3.0" fill="#FF6B6B"/><circle cx="133.1" cy="62.7" r="3.5" fill="#6C63FF"/><circle cx="149.9" cy="65.1" r="2.0" fill="#00D4FF"/><circle cx="133.6" cy="113.3" r="2.5" fill="#00E5A0"/><circle cx="129.9" cy="139.1" r="3.0" fill="#FFB547"/><circle cx="110.8" cy="116.3" r="3.5" fill="#FF6B6B"/><circle cx="130.6" cy="72.9" r="2.0" fill="#6C63FF"/><circle cx="148.0" cy="86.2" r="2.5" fill="#00D4FF"/><circle cx="139.0" cy="110.1" r="3.0" fill="#00E5A0"/><circle cx="144.6" cy="46.4" r="3.5" fill="#FFB547"/><circle cx="165.6" cy="79.2" r="2.0" fill="#FF6B6B"/><circle cx="121.3" cy="77.9" r="2.5" fill="#6C63FF"/><circle cx="156.8" cy="81.0" r="3.0" fill="#00D4FF"/><circle cx="107.2" cy="61.4" r="3.5" fill="#00E5A0"/><circle cx="122.6" cy="55.5" r="2.0" fill="#FFB547"/><circle cx="109.6" cy="71.3" r="2.5" fill="#FF6B6B"/><circle cx="132.7" cy="120.9" r="3.0" fill="#6C63FF"/><circle cx="161.3" cy="86.1" r="3.5" fill="#00D4FF"/><circle cx="133.8" cy="121.4" r="2.0" fill="#00E5A0"/><circle cx="168.8" cy="107.1" r="2.5" fill="#FFB547"/><circle cx="118.7" cy="79.7" r="3.0" fill="#FF6B6B"/><circle cx="161.3" cy="113.0" r="3.5" fill="#6C63FF"/><circle cx="108.1" cy="104.9" r="2.0" fill="#00D4FF"/><circle cx="162.7" cy="73.0" r="2.5" fill="#00E5A0"/><circle cx="145.2" cy="114.5" r="3.0" fill="#FFB547"/><circle cx="163.3" cy="119.0" r="3.5" fill="#FF6B6B"/><circle cx="134.0" cy="21.7" r="2.0" fill="#6C63FF"/><circle cx="140.4" cy="97.9" r="2.5" fill="#00D4FF"/><circle cx="150.1" cy="32.3" r="3.0" fill="#00E5A0"/><circle cx="114.4" cy="93.3" r="3.5" fill="#FFB547"/><circle cx="139.7" cy="124.0" r="2.0" fill="#FF6B6B"/><circle cx="132.2" cy="113.3" r="2.5" fill="#6C63FF"/><circle cx="165.3" cy="37.2" r="3.0" fill="#00D4FF"/><circle cx="150.5" cy="125.5" r="3.5" fill="#00E5A0"/><circle cx="141.1" cy="36.7" r="2.0" fill="#FFB547"/><circle cx="153.1" cy="72.9" r="2.5" fill="#FF6B6B"/><circle cx="107.0" cy="59.7" r="3.0" fill="#6C63FF"/><circle cx="144.4" cy="143.8" r="3.5" fill="#00D4FF"/><circle cx="172.0" cy="77.3" r="2.0" fill="#00E5A0"/><circle cx="159.3" cy="133.5" r="2.5" fill="#FFB547"/><circle cx="146.0" cy="134.4" r="3.0" fill="#FF6B6B"/><circle cx="151.2" cy="23.8" r="3.5" fill="#6C63FF"/><circle cx="125.6" cy="71.7" r="2.0" fill="#00D4FF"/><circle cx="110.9" cy="85.9" r="2.5" fill="#00E5A0"/><circle cx="139.9" cy="57.8" r="3.0" fill="#FFB547"/><circle cx="156.4" cy="36.1" r="3.5" fill="#FF6B6B"/><circle cx="111.8" cy="62.9" r="2.0" fill="#6C63FF"/><circle cx="127.0" cy="42.5" r="2.5" fill="#00D4FF"/><circle cx="115.1" cy="76.2" r="3.0" fill="#00E5A0"/><circle cx="118.7" cy="83.2" r="3.5" fill="#FFB547"/><circle cx="171.7" cy="66.8" r="2.0" fill="#FF6B6B"/><circle cx="149.3" cy="96.2" r="2.5" fill="#6C63FF"/><circle cx="145.5" cy="53.7" r="3.0" fill="#00D4FF"/><circle cx="151.1" cy="112.3" r="3.5" fill="#00E5A0"/><circle cx="149.8" cy="34.3" r="2.0" fill="#FFB547"/><circle cx="130.8" cy="95.9" r="2.5" fill="#FF6B6B"/></g></svg></div>
+        <div>
+          <div class="logo-name">QueryMind</div>
+          <div class="logo-tag">Agentic BI Assistant</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-body">
+      <span class="s-label">Data Source</span>
+
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" onchange="handleUpload(this)">
+        <span class="upload-icon">⬆️</span>
+        <div class="upload-text"><strong>Click to upload</strong> or drag & drop<br>CSV, XLSX · Max 50MB</div>
+      </div>
+
+      <div class="file-status" id="fileStatus" style="display:none">
+        <div class="status-dot"></div>
+        <div class="status-info">
+          <div class="status-name" id="statusName">—</div>
+          <div class="status-meta" id="statusMeta">—</div>
+        </div>
+      </div>
+
+      <div class="stats-row" id="statsRow" style="display:none">
+        <div class="stat-pill"><div class="stat-num" id="statRows">—</div><div class="stat-lbl">Rows</div></div>
+        <div class="stat-pill"><div class="stat-num" id="statCols">—</div><div class="stat-lbl">Cols</div></div>
+        <div class="stat-pill"><div class="stat-num" id="statMiss">—</div><div class="stat-lbl">Missing</div></div>
+      </div>
+
+      <div class="s-divider"></div>
+      <span class="s-label">Quick Questions</span>
+      <button class="ex-btn" onclick="sendQ('Summarize this dataset for me')"><span class="ex-icon">✦</span>Summarize this dataset</button>
+      <button class="ex-btn" onclick="sendQ('Which category has the highest total sales?')"><span class="ex-icon">✦</span>Highest sales category</button>
+      <button class="ex-btn" onclick="sendQ('Show a bar chart of sales by region')"><span class="ex-icon">✦</span>Sales by region chart</button>
+      <button class="ex-btn" onclick="sendQ('What are the top 5 rows by profit?')"><span class="ex-icon">✦</span>Top 5 by profit</button>
+      <button class="ex-btn" onclick="sendQ('Are there any missing values?')"><span class="ex-icon">✦</span>Check missing values</button>
+      <button class="ex-btn" onclick="sendQ('What business risks do you see in this data?')"><span class="ex-icon">✦</span>Spot business risks</button>
+
+      <div class="s-divider"></div>
+      <button class="clear-btn" onclick="clearChat()">✕ Clear conversation</button>
+    </div>
+
+    <div class="credit-foot">Designed &amp; Developed by<br><strong>Naman Rai</strong> · IIIT Naya Raipur</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Agentic Business Intelligence Assistant</div>
+        <div class="topbar-sub">Ask questions in plain English · Get instant business insights</div>
+      </div>
+      <div class="topbar-badges">
+        <span class="badge badge-indigo">llama-3.3-70b</span>
+        <span class="badge badge-green"><span class="badge-dot"></span>Live</span>
+      </div>
+    </div>
+
+    <div class="kpi-strip" id="kpiStrip" style="display:none">
+      <div class="kpi-card"><div class="kpi-label">Rows Analyzed</div><div class="kpi-val" id="kpiRows">0</div></div>
+      <div class="kpi-card"><div class="kpi-label">Columns</div><div class="kpi-val" id="kpiCols">0</div></div>
+      <div class="kpi-card"><div class="kpi-label">Data Quality</div><div class="kpi-val" id="kpiQuality">0%</div></div>
+      <div class="kpi-card"><div class="kpi-label">Insights Generated</div><div class="kpi-val" id="kpiMsgs">0</div></div>
+    </div>
+
+    <div class="chat-area" id="chatArea">
+      <div class="empty" id="emptyState">
+        <div class="empty-orb">
+          <svg viewBox="0 0 190 165" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M98 16 C80 16 64 25 58 37 C44 36 32 46 30 58 C18 60 10 70 10 82 C10 90 14 96 21 100 C14 104 10 111 10 118 C10 131 21 140 35 138 C37 147 47 154 58 154 C63 154 67 152 70 150 C76 156 86 158 95 156 L98 156 Z" fill="#F0F4FF"/><path d="M58 37 C53 49 53 60 60 70 M30 58 C39 63 44 73 41 82 M21 100 C33 97 42 104 41 113 M35 138 C44 131 55 134 60 143" stroke="#080C18" stroke-width="5" stroke-linecap="round" fill="none"/><defs><clipPath id="rightHemiClip"><ellipse cx="140" cy="84" rx="38" ry="68"/></clipPath></defs><g clip-path="url(#rightHemiClip)"><line x1="145.2" y1="145.1" x2="129.9" y2="139.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="107.0" y2="59.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="159.3" y2="133.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="141.1" y2="36.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="134.0" y2="21.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="139.9" y2="57.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="146.0" y2="134.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="112.8" y2="81.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="130.6" y1="72.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="141.1" y2="36.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.2" y1="23.8" x2="156.4" y2="36.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="150.5" y2="125.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="150.1" y2="32.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="111.8" y2="62.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="156.4" y2="36.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="129.9" y2="139.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="149.8" y2="34.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="156.4" y2="36.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="159.3" y2="133.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="149.9" y2="65.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.8" y2="121.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="111.8" y2="62.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="110.9" y2="85.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="162.7" y2="73.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="162.7" y2="73.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="79.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="151.1" y2="112.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.4" y1="36.1" x2="149.8" y2="34.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="153.1" y2="72.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="132.2" y1="113.3" x2="130.8" y2="95.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="140.4" y2="97.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="148.0" y2="86.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="144.4" y2="143.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="109.6" y2="71.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.7" y2="120.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="115.1" y2="76.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="111.8" y1="62.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.3" y1="96.2" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="151.1" y2="112.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="114.4" y2="93.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="144.6" y2="46.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="110.8" y1="116.3" x2="108.1" y2="104.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="161.3" y2="113.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="139.9" y2="57.8" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="110.9" y2="85.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="149.9" y2="65.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="139.9" y2="57.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="149.9" y2="65.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="121.3" y2="77.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="146.0" y2="134.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="107.0" y2="59.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.4" y1="143.8" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="144.6" y2="46.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="171.7" y2="66.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="83.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="134.0" y2="21.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.0" y2="110.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="159.3" y1="133.5" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="159.3" y2="133.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.2" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="163.3" y2="119.0" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="172.0" y1="77.3" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="144.4" y2="143.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="140.4" y2="97.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.6" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="130.6" y2="72.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.0" y1="59.7" x2="111.8" y2="62.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="141.1" y2="36.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="114.4" y2="93.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.6" y2="113.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="112.8" y2="81.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="83.2" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="118.7" y2="83.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="125.6" y2="71.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="145.5" y2="53.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.9" y1="57.8" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="111.8" y2="62.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="156.8" y2="81.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="172.0" y2="77.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="139.9" y2="57.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="127.2" y2="23.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="139.0" y2="110.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="145.5" y2="53.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="111.8" y2="62.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="172.0" y2="77.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="118.7" y2="83.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="145.2" y2="114.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="133.6" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="132.7" y2="120.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="110.9" y2="85.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="125.6" y2="71.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="114.9" y2="89.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="134.0" y1="21.7" x2="151.2" y2="23.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="172.0" y2="77.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="132.7" y1="120.9" x2="133.8" y2="121.4" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="141.1" y2="36.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="159.3" y2="133.5" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="161.3" y2="86.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="122.6" y2="55.5" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.8" y1="121.4" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="151.2" y2="23.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="133.8" y2="121.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="110.9" y2="85.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="151.1" y2="112.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="153.1" y2="72.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="156.4" y2="36.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><circle cx="131.9" cy="113.8" r="2.0" fill="#6C63FF"/><circle cx="137.1" cy="23.9" r="2.5" fill="#00D4FF"/><circle cx="118.0" cy="83.0" r="3.0" fill="#00E5A0"/><circle cx="151.7" cy="124.9" r="3.5" fill="#FFB547"/><circle cx="127.2" cy="23.1" r="2.0" fill="#FF6B6B"/><circle cx="113.5" cy="76.4" r="2.5" fill="#6C63FF"/><circle cx="145.2" cy="145.1" r="3.0" fill="#00D4FF"/><circle cx="114.9" cy="89.7" r="3.5" fill="#00E5A0"/><circle cx="138.9" cy="117.6" r="2.0" fill="#FFB547"/><circle cx="150.9" cy="78.5" r="2.5" fill="#FF6B6B"/><circle cx="112.8" cy="81.7" r="3.0" fill="#6C63FF"/><circle cx="126.5" cy="79.9" r="3.5" fill="#00D4FF"/><circle cx="126.0" cy="129.6" r="2.0" fill="#00E5A0"/><circle cx="159.0" cy="57.3" r="2.5" fill="#FFB547"/><circle cx="143.0" cy="52.1" r="3.0" fill="#FF6B6B"/><circle cx="133.1" cy="62.7" r="3.5" fill="#6C63FF"/><circle cx="149.9" cy="65.1" r="2.0" fill="#00D4FF"/><circle cx="133.6" cy="113.3" r="2.5" fill="#00E5A0"/><circle cx="129.9" cy="139.1" r="3.0" fill="#FFB547"/><circle cx="110.8" cy="116.3" r="3.5" fill="#FF6B6B"/><circle cx="130.6" cy="72.9" r="2.0" fill="#6C63FF"/><circle cx="148.0" cy="86.2" r="2.5" fill="#00D4FF"/><circle cx="139.0" cy="110.1" r="3.0" fill="#00E5A0"/><circle cx="144.6" cy="46.4" r="3.5" fill="#FFB547"/><circle cx="165.6" cy="79.2" r="2.0" fill="#FF6B6B"/><circle cx="121.3" cy="77.9" r="2.5" fill="#6C63FF"/><circle cx="156.8" cy="81.0" r="3.0" fill="#00D4FF"/><circle cx="107.2" cy="61.4" r="3.5" fill="#00E5A0"/><circle cx="122.6" cy="55.5" r="2.0" fill="#FFB547"/><circle cx="109.6" cy="71.3" r="2.5" fill="#FF6B6B"/><circle cx="132.7" cy="120.9" r="3.0" fill="#6C63FF"/><circle cx="161.3" cy="86.1" r="3.5" fill="#00D4FF"/><circle cx="133.8" cy="121.4" r="2.0" fill="#00E5A0"/><circle cx="168.8" cy="107.1" r="2.5" fill="#FFB547"/><circle cx="118.7" cy="79.7" r="3.0" fill="#FF6B6B"/><circle cx="161.3" cy="113.0" r="3.5" fill="#6C63FF"/><circle cx="108.1" cy="104.9" r="2.0" fill="#00D4FF"/><circle cx="162.7" cy="73.0" r="2.5" fill="#00E5A0"/><circle cx="145.2" cy="114.5" r="3.0" fill="#FFB547"/><circle cx="163.3" cy="119.0" r="3.5" fill="#FF6B6B"/><circle cx="134.0" cy="21.7" r="2.0" fill="#6C63FF"/><circle cx="140.4" cy="97.9" r="2.5" fill="#00D4FF"/><circle cx="150.1" cy="32.3" r="3.0" fill="#00E5A0"/><circle cx="114.4" cy="93.3" r="3.5" fill="#FFB547"/><circle cx="139.7" cy="124.0" r="2.0" fill="#FF6B6B"/><circle cx="132.2" cy="113.3" r="2.5" fill="#6C63FF"/><circle cx="165.3" cy="37.2" r="3.0" fill="#00D4FF"/><circle cx="150.5" cy="125.5" r="3.5" fill="#00E5A0"/><circle cx="141.1" cy="36.7" r="2.0" fill="#FFB547"/><circle cx="153.1" cy="72.9" r="2.5" fill="#FF6B6B"/><circle cx="107.0" cy="59.7" r="3.0" fill="#6C63FF"/><circle cx="144.4" cy="143.8" r="3.5" fill="#00D4FF"/><circle cx="172.0" cy="77.3" r="2.0" fill="#00E5A0"/><circle cx="159.3" cy="133.5" r="2.5" fill="#FFB547"/><circle cx="146.0" cy="134.4" r="3.0" fill="#FF6B6B"/><circle cx="151.2" cy="23.8" r="3.5" fill="#6C63FF"/><circle cx="125.6" cy="71.7" r="2.0" fill="#00D4FF"/><circle cx="110.9" cy="85.9" r="2.5" fill="#00E5A0"/><circle cx="139.9" cy="57.8" r="3.0" fill="#FFB547"/><circle cx="156.4" cy="36.1" r="3.5" fill="#FF6B6B"/><circle cx="111.8" cy="62.9" r="2.0" fill="#6C63FF"/><circle cx="127.0" cy="42.5" r="2.5" fill="#00D4FF"/><circle cx="115.1" cy="76.2" r="3.0" fill="#00E5A0"/><circle cx="118.7" cy="83.2" r="3.5" fill="#FFB547"/><circle cx="171.7" cy="66.8" r="2.0" fill="#FF6B6B"/><circle cx="149.3" cy="96.2" r="2.5" fill="#6C63FF"/><circle cx="145.5" cy="53.7" r="3.0" fill="#00D4FF"/><circle cx="151.1" cy="112.3" r="3.5" fill="#00E5A0"/><circle cx="149.8" cy="34.3" r="2.0" fill="#FFB547"/><circle cx="130.8" cy="95.9" r="2.5" fill="#FF6B6B"/></g></svg>
+        </div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;background:linear-gradient(135deg,#00D4FF,#6C63FF 55%,#FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;letter-spacing:-0.3px">QueryMind</div>
+        <div class="empty-title">Chat with your data</div>
+        <div class="empty-sub">Upload any CSV or Excel file and ask questions in plain English. No SQL or Python knowledge needed.</div>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="f-icon">🧠</div><div class="f-title">Smart Analysis</div><div class="f-desc">Writes & runs Pandas code automatically</div><div class="f-pulse"></div></div>
+          <div class="feature-card"><div class="f-icon">📈</div><div class="f-title">Auto Charts</div><div class="f-desc">Generates visualizations instantly</div><div class="f-pulse"></div></div>
+          <div class="feature-card"><div class="f-icon">🗄️</div><div class="f-title">SQL Queries</div><div class="f-desc">Runs SQL without writing a line</div><div class="f-pulse"></div></div>
+          <div class="feature-card"><div class="f-icon">💬</div><div class="f-title">Memory</div><div class="f-desc">Remembers full conversation context</div><div class="f-pulse"></div></div>
+          <div class="feature-card"><div class="f-icon">⚠️</div><div class="f-title">Risk Detection</div><div class="f-desc">Flags anomalies a human could miss</div><div class="f-pulse"></div></div>
+          <div class="feature-card"><div class="f-icon">⚡</div><div class="f-title">Instant Answers</div><div class="f-desc">Seconds, not days</div><div class="f-pulse"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-box">
+        <textarea class="chat-input" id="chatInput" rows="1"
+          placeholder="Ask anything about your data…  e.g. 'Which region had the highest profit in Q3?'"
+          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="send-btn" onclick="sendMessage()" title="Send">➤</button>
+      </div>
+      <div class="input-hint">Enter to send · Shift+Enter for new line</div>
+    </div>
+  </main>
+</div>
+
+<script>
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+
+class P {
+  constructor(){ this.reset(); }
+  reset(){
+    this.x=Math.random()*W; this.y=Math.random()*H; this.r=Math.random()*1.2+0.3;
+    this.vx=(Math.random()-0.5)*0.25; this.vy=(Math.random()-0.5)*0.25;
+    this.a=Math.random()*0.4+0.05; this.c=Math.random()>0.5?'#6C63FF':'#00D4FF';
+  }
+  tick(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>W||this.y<0||this.y>H) this.reset(); }
+  draw(){ ctx.save(); ctx.globalAlpha=this.a; ctx.fillStyle=this.c; ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+}
+for(let i=0;i<90;i++) particles.push(new P());
+
+function drawLines(){
+  for(let i=0;i<particles.length;i++)
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<90){ ctx.save(); ctx.globalAlpha=(1-d/90)*0.07; ctx.strokeStyle='#6C63FF'; ctx.lineWidth=0.5;
+        ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke(); ctx.restore(); }
+    }
+}
+(function loop(){ ctx.clearRect(0,0,W,H); particles.forEach(p=>{p.tick();p.draw()}); drawLines(); requestAnimationFrame(loop); })();
+
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e=>{e.preventDefault();zone.style.borderColor='#6C63FF'});
+zone.addEventListener('dragleave', ()=>zone.style.borderColor='');
+zone.addEventListener('drop', e=>{ e.preventDefault(); zone.style.borderColor=''; const f=e.dataTransfer.files[0]; if(f) uploadFile(f); });
+
+function handleUpload(input){ if(input.files[0]) uploadFile(input.files[0]); }
+
+function countUp(id, end, suffix='', duration=900){
+  const el=document.getElementById(id); const start=performance.now();
+  function tick(now){ const p=Math.min((now-start)/duration,1); const eased=1-Math.pow(1-p,3);
+    el.textContent = Math.floor(eased*end).toLocaleString()+suffix; if(p<1) requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+}
+
+let msgCount = 0;
+
+async function uploadFile(file){
+  showLoader('Analyzing your data…');
+  const fd=new FormData(); fd.append('file', file);
+  try{
+    const res = await fetch('/upload', {method:'POST', body:fd});
+    const data = await res.json();
+    hideLoader();
+    if(data.success){
+      document.getElementById('fileStatus').style.display='flex';
+      document.getElementById('statusName').textContent = file.name;
+      document.getElementById('statusMeta').textContent = `${data.rows.toLocaleString()} rows · ${data.cols} columns`;
+      document.getElementById('statsRow').style.display='flex';
+      document.getElementById('statRows').textContent = data.rows.toLocaleString();
+      document.getElementById('statCols').textContent = data.cols;
+      document.getElementById('statMiss').textContent = data.missing;
+
+      document.getElementById('kpiStrip').style.display='grid';
+      countUp('kpiRows', data.rows);
+      countUp('kpiCols', data.cols);
+      const quality = Math.round(((data.rows*data.cols - data.missing)/(data.rows*data.cols))*100);
+      countUp('kpiQuality', quality, '%');
+
+      removeEmpty();
+      addMsg('ai', '✅ **'+file.name+'** loaded!\n\n'+data.summary+'\n\nAsk me anything about your data.');
+      showToast('File loaded successfully', 'success');
+    } else { showToast('Error: '+data.error, 'error'); }
+  } catch(e){ hideLoader(); showToast('Upload failed: '+e.message, 'error'); }
+}
+
+function removeEmpty(){ const e=document.getElementById('emptyState'); if(e) e.remove(); }
+
+function addMsg(role, text, chartUrl=null){
+  removeEmpty();
+  const chat=document.getElementById('chatArea');
+  msgCount++; document.getElementById('kpiMsgs').textContent = msgCount;
+
+  const wrap=document.createElement('div'); wrap.className=`msg ${role}`;
+  const av=document.createElement('div'); av.className=`avatar ${role==='ai'?'ai-av':'user-av'}`;
+  av.textContent = role==='ai'?'AI':'You';
+
+  const bub=document.createElement('div'); bub.className=`bubble ${role==='ai'?'ai-b':'user-b'}`;
+  bub.innerHTML = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/`(.*?)`/g,'<code>$1</code>').replace(/\n/g,'<br>');
+
+  if(chartUrl){ const cw=document.createElement('div'); cw.className='chart-wrap';
+    const img=document.createElement('img'); img.src=chartUrl; cw.appendChild(img); bub.appendChild(cw); }
+
+  if(role==='ai'){wrap.appendChild(av);wrap.appendChild(bub);} else {wrap.appendChild(bub);wrap.appendChild(av);}
+  chat.appendChild(wrap); chat.scrollTop=chat.scrollHeight;
+}
+
+function showTyping(){
+  removeEmpty();
+  const chat=document.getElementById('chatArea');
+  const wrap=document.createElement('div'); wrap.className='msg ai'; wrap.id='typing-indicator';
+  wrap.innerHTML=`<div class="avatar ai-av">AI</div><div class="typing-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  chat.appendChild(wrap); chat.scrollTop=chat.scrollHeight;
+}
+function hideTyping(){ const t=document.getElementById('typing-indicator'); if(t) t.remove(); }
+
+async function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim(); if(!msg) return;
+  input.value=''; input.style.height='auto';
+  addMsg('user', msg); showTyping();
+  try{
+    const res = await fetch('/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message: msg})});
+    const data = await res.json();
+    hideTyping(); addMsg('ai', data.answer, data.chart);
+  } catch(e){ hideTyping(); addMsg('ai', 'Connection error. Make sure the server is running.'); }
+}
+
+function sendQ(q){ document.getElementById('chatInput').value=q; sendMessage(); }
+function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
+function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,130)+'px'; }
+
+function clearChat(){
+  document.getElementById('chatArea').innerHTML=`<div class="empty" id="emptyState">
+    <div class="empty-orb"><svg viewBox="0 0 190 165" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M98 16 C80 16 64 25 58 37 C44 36 32 46 30 58 C18 60 10 70 10 82 C10 90 14 96 21 100 C14 104 10 111 10 118 C10 131 21 140 35 138 C37 147 47 154 58 154 C63 154 67 152 70 150 C76 156 86 158 95 156 L98 156 Z" fill="#F0F4FF"/><path d="M58 37 C53 49 53 60 60 70 M30 58 C39 63 44 73 41 82 M21 100 C33 97 42 104 41 113 M35 138 C44 131 55 134 60 143" stroke="#080C18" stroke-width="5" stroke-linecap="round" fill="none"/><defs><clipPath id="rightHemiClip"><ellipse cx="140" cy="84" rx="38" ry="68"/></clipPath></defs><g clip-path="url(#rightHemiClip)"><line x1="145.2" y1="145.1" x2="129.9" y2="139.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="107.0" y2="59.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="159.3" y2="133.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="141.1" y2="36.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="134.0" y2="21.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="139.9" y2="57.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="146.0" y2="134.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="112.8" y2="81.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="130.6" y1="72.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="141.1" y2="36.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="156.8" y2="81.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.2" y1="23.8" x2="156.4" y2="36.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="79.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.7" y1="124.0" x2="150.5" y2="125.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="150.1" y2="32.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="111.8" y2="62.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="156.4" y2="36.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="129.9" y2="139.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="149.8" y2="34.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="156.4" y2="36.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="159.3" y2="133.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="149.9" y2="65.1" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.8" y2="121.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="111.8" y2="62.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="110.9" y2="85.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="162.7" y2="73.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="162.7" y2="73.0" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="79.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="151.1" y2="112.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.4" y1="36.1" x2="149.8" y2="34.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="153.1" y2="72.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="132.2" y1="113.3" x2="130.8" y2="95.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="140.4" y2="97.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="148.0" y2="86.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="144.4" y2="143.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="109.6" y2="71.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.7" y2="120.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="125.6" y1="71.7" x2="115.1" y2="76.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="130.8" y2="95.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="111.8" y1="62.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.3" y1="96.2" x2="151.1" y2="112.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="151.1" y2="112.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="108.1" y1="104.9" x2="114.4" y2="93.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="144.6" y2="46.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="110.8" y1="116.3" x2="108.1" y2="104.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="161.3" y2="113.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="139.9" y2="57.8" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.4" y1="93.3" x2="110.9" y2="85.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="130.8" y2="95.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.9" y1="78.5" x2="149.9" y2="65.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="139.9" y2="57.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="149.9" y2="65.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="121.3" y2="77.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="150.5" y1="125.5" x2="146.0" y2="134.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="107.0" y2="59.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.4" y1="143.8" x2="146.0" y2="134.4" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="144.6" y2="46.4" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="171.7" y2="66.8" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="118.7" y2="83.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="127.2" y1="23.1" x2="134.0" y2="21.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.0" y2="110.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="110.9" y2="85.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="159.3" y1="133.5" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="159.3" y2="133.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="132.2" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="113.0" x2="163.3" y2="119.0" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="172.0" y1="77.3" x2="171.7" y2="66.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="144.4" y2="143.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="159.0" y1="57.3" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="140.4" y2="97.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="130.6" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="130.6" y2="72.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="107.0" y1="59.7" x2="111.8" y2="62.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="141.1" y2="36.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="132.7" y2="120.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="114.4" y2="93.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="125.6" y2="71.7" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="133.6" y2="113.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="112.8" y2="81.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="83.2" x2="130.8" y2="95.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="118.7" y1="79.7" x2="118.7" y2="83.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="139.7" y2="124.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="122.6" y1="55.5" x2="125.6" y2="71.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="145.5" y2="53.7" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="161.3" y2="86.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="139.9" y1="57.8" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="107.2" y1="61.4" x2="111.8" y2="62.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="156.8" y2="81.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="172.0" y2="77.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="153.1" y2="72.9" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="139.9" y2="57.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="137.1" y1="23.9" x2="127.2" y2="23.1" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="129.9" y1="139.1" x2="146.0" y2="134.4" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="133.6" y1="113.3" x2="139.0" y2="110.1" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="149.9" y1="65.1" x2="145.5" y2="53.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="113.5" y1="76.4" x2="109.6" y2="71.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="132.2" y2="113.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="111.8" y2="62.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="172.0" y2="77.3" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="148.0" y1="86.2" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="168.8" y1="107.1" x2="163.3" y2="119.0" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="118.7" y2="83.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="121.3" y1="77.9" x2="115.1" y2="76.2" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="139.0" y1="110.1" x2="145.2" y2="114.5" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="131.9" y1="113.8" x2="133.6" y2="113.3" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="138.9" y1="117.6" x2="132.7" y2="120.9" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="150.5" y2="125.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="115.1" y2="76.2" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="143.0" y1="52.1" x2="127.0" y2="42.5" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="112.8" y1="81.7" x2="110.9" y2="85.9" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="126.5" y1="79.9" x2="125.6" y2="71.7" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="118.0" y1="83.0" x2="114.9" y2="89.7" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="134.0" y1="21.7" x2="151.2" y2="23.8" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="161.3" y1="86.1" x2="172.0" y2="77.3" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="149.8" y2="34.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="132.7" y1="120.9" x2="133.8" y2="121.4" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="141.1" y2="36.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="145.1" x2="159.3" y2="133.5" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="145.2" y1="114.5" x2="151.1" y2="112.3" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="145.5" y2="53.7" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="165.6" y1="79.2" x2="161.3" y2="86.1" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="133.1" y1="62.7" x2="122.6" y2="55.5" stroke="#6C63FF" stroke-width="1.3" opacity="0.6"/><line x1="133.8" y1="121.4" x2="139.7" y2="124.0" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="156.8" y1="81.0" x2="162.7" y2="73.0" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="150.1" y1="32.3" x2="151.2" y2="23.8" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="140.4" y1="97.9" x2="149.3" y2="96.2" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="165.3" y1="37.2" x2="151.2" y2="23.8" stroke="#00D4FF" stroke-width="1.3" opacity="0.6"/><line x1="126.0" y1="129.6" x2="133.8" y2="121.4" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="141.1" y1="36.7" x2="127.0" y2="42.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="109.6" y1="71.3" x2="110.9" y2="85.9" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="151.7" y1="124.9" x2="145.2" y2="114.5" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><line x1="163.3" y1="119.0" x2="151.1" y2="112.3" stroke="#FF6B6B" stroke-width="1.3" opacity="0.6"/><line x1="162.7" y1="73.0" x2="153.1" y2="72.9" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="114.9" y1="89.7" x2="118.7" y2="83.2" stroke="#00E5A0" stroke-width="1.3" opacity="0.6"/><line x1="144.6" y1="46.4" x2="156.4" y2="36.1" stroke="#FFB547" stroke-width="1.3" opacity="0.6"/><circle cx="131.9" cy="113.8" r="2.0" fill="#6C63FF"/><circle cx="137.1" cy="23.9" r="2.5" fill="#00D4FF"/><circle cx="118.0" cy="83.0" r="3.0" fill="#00E5A0"/><circle cx="151.7" cy="124.9" r="3.5" fill="#FFB547"/><circle cx="127.2" cy="23.1" r="2.0" fill="#FF6B6B"/><circle cx="113.5" cy="76.4" r="2.5" fill="#6C63FF"/><circle cx="145.2" cy="145.1" r="3.0" fill="#00D4FF"/><circle cx="114.9" cy="89.7" r="3.5" fill="#00E5A0"/><circle cx="138.9" cy="117.6" r="2.0" fill="#FFB547"/><circle cx="150.9" cy="78.5" r="2.5" fill="#FF6B6B"/><circle cx="112.8" cy="81.7" r="3.0" fill="#6C63FF"/><circle cx="126.5" cy="79.9" r="3.5" fill="#00D4FF"/><circle cx="126.0" cy="129.6" r="2.0" fill="#00E5A0"/><circle cx="159.0" cy="57.3" r="2.5" fill="#FFB547"/><circle cx="143.0" cy="52.1" r="3.0" fill="#FF6B6B"/><circle cx="133.1" cy="62.7" r="3.5" fill="#6C63FF"/><circle cx="149.9" cy="65.1" r="2.0" fill="#00D4FF"/><circle cx="133.6" cy="113.3" r="2.5" fill="#00E5A0"/><circle cx="129.9" cy="139.1" r="3.0" fill="#FFB547"/><circle cx="110.8" cy="116.3" r="3.5" fill="#FF6B6B"/><circle cx="130.6" cy="72.9" r="2.0" fill="#6C63FF"/><circle cx="148.0" cy="86.2" r="2.5" fill="#00D4FF"/><circle cx="139.0" cy="110.1" r="3.0" fill="#00E5A0"/><circle cx="144.6" cy="46.4" r="3.5" fill="#FFB547"/><circle cx="165.6" cy="79.2" r="2.0" fill="#FF6B6B"/><circle cx="121.3" cy="77.9" r="2.5" fill="#6C63FF"/><circle cx="156.8" cy="81.0" r="3.0" fill="#00D4FF"/><circle cx="107.2" cy="61.4" r="3.5" fill="#00E5A0"/><circle cx="122.6" cy="55.5" r="2.0" fill="#FFB547"/><circle cx="109.6" cy="71.3" r="2.5" fill="#FF6B6B"/><circle cx="132.7" cy="120.9" r="3.0" fill="#6C63FF"/><circle cx="161.3" cy="86.1" r="3.5" fill="#00D4FF"/><circle cx="133.8" cy="121.4" r="2.0" fill="#00E5A0"/><circle cx="168.8" cy="107.1" r="2.5" fill="#FFB547"/><circle cx="118.7" cy="79.7" r="3.0" fill="#FF6B6B"/><circle cx="161.3" cy="113.0" r="3.5" fill="#6C63FF"/><circle cx="108.1" cy="104.9" r="2.0" fill="#00D4FF"/><circle cx="162.7" cy="73.0" r="2.5" fill="#00E5A0"/><circle cx="145.2" cy="114.5" r="3.0" fill="#FFB547"/><circle cx="163.3" cy="119.0" r="3.5" fill="#FF6B6B"/><circle cx="134.0" cy="21.7" r="2.0" fill="#6C63FF"/><circle cx="140.4" cy="97.9" r="2.5" fill="#00D4FF"/><circle cx="150.1" cy="32.3" r="3.0" fill="#00E5A0"/><circle cx="114.4" cy="93.3" r="3.5" fill="#FFB547"/><circle cx="139.7" cy="124.0" r="2.0" fill="#FF6B6B"/><circle cx="132.2" cy="113.3" r="2.5" fill="#6C63FF"/><circle cx="165.3" cy="37.2" r="3.0" fill="#00D4FF"/><circle cx="150.5" cy="125.5" r="3.5" fill="#00E5A0"/><circle cx="141.1" cy="36.7" r="2.0" fill="#FFB547"/><circle cx="153.1" cy="72.9" r="2.5" fill="#FF6B6B"/><circle cx="107.0" cy="59.7" r="3.0" fill="#6C63FF"/><circle cx="144.4" cy="143.8" r="3.5" fill="#00D4FF"/><circle cx="172.0" cy="77.3" r="2.0" fill="#00E5A0"/><circle cx="159.3" cy="133.5" r="2.5" fill="#FFB547"/><circle cx="146.0" cy="134.4" r="3.0" fill="#FF6B6B"/><circle cx="151.2" cy="23.8" r="3.5" fill="#6C63FF"/><circle cx="125.6" cy="71.7" r="2.0" fill="#00D4FF"/><circle cx="110.9" cy="85.9" r="2.5" fill="#00E5A0"/><circle cx="139.9" cy="57.8" r="3.0" fill="#FFB547"/><circle cx="156.4" cy="36.1" r="3.5" fill="#FF6B6B"/><circle cx="111.8" cy="62.9" r="2.0" fill="#6C63FF"/><circle cx="127.0" cy="42.5" r="2.5" fill="#00D4FF"/><circle cx="115.1" cy="76.2" r="3.0" fill="#00E5A0"/><circle cx="118.7" cy="83.2" r="3.5" fill="#FFB547"/><circle cx="171.7" cy="66.8" r="2.0" fill="#FF6B6B"/><circle cx="149.3" cy="96.2" r="2.5" fill="#6C63FF"/><circle cx="145.5" cy="53.7" r="3.0" fill="#00D4FF"/><circle cx="151.1" cy="112.3" r="3.5" fill="#00E5A0"/><circle cx="149.8" cy="34.3" r="2.0" fill="#FFB547"/><circle cx="130.8" cy="95.9" r="2.5" fill="#FF6B6B"/></g></svg></div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;background:linear-gradient(135deg,#00D4FF,#6C63FF 55%,#FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;letter-spacing:-0.3px">QueryMind</div>
+    <div class="empty-title">Chat with your data</div>
+    <div class="empty-sub">Upload any CSV or Excel file and ask questions in plain English.</div>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="f-icon">🧠</div><div class="f-title">Smart Analysis</div><div class="f-desc">Writes & runs Pandas code automatically</div><div class="f-pulse"></div></div>
+      <div class="feature-card"><div class="f-icon">📈</div><div class="f-title">Auto Charts</div><div class="f-desc">Generates visualizations instantly</div><div class="f-pulse"></div></div>
+      <div class="feature-card"><div class="f-icon">🗄️</div><div class="f-title">SQL Queries</div><div class="f-desc">Runs SQL without writing a line</div><div class="f-pulse"></div></div>
+      <div class="feature-card"><div class="f-icon">💬</div><div class="f-title">Memory</div><div class="f-desc">Remembers full conversation context</div><div class="f-pulse"></div></div>
+      <div class="feature-card"><div class="f-icon">⚠️</div><div class="f-title">Risk Detection</div><div class="f-desc">Flags anomalies a human could miss</div><div class="f-pulse"></div></div>
+      <div class="feature-card"><div class="f-icon">⚡</div><div class="f-title">Instant Answers</div><div class="f-desc">Seconds, not days</div><div class="f-pulse"></div></div>
+    </div>
+  </div>`;
+  msgCount = 0;
+  document.getElementById('kpiMsgs').textContent = 0;
+}
+
+function showToast(msg, type='success'){
+  const t=document.createElement('div'); t.className=`toast ${type}`; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(), 3500);
+}
+function showLoader(text='Loading…'){
+  const l=document.createElement('div'); l.className='loader'; l.id='loader';
+  l.innerHTML=`<div class="loader-ring"></div><div class="loader-text">${text}</div>`;
+  document.body.appendChild(l);
+}
+function hideLoader(){ const l=document.getElementById('loader'); if(l) l.remove(); }
+</script>
+</body>
+</html>

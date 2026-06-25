@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+.env
+*.db
+chart_*.png
+querymind_temp.db
+.streamlit/
