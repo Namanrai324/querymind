@@ -294,7 +294,7 @@ IIIT Naya Raipur | Graduating August 2026
 
 This project was built as a major capstone demonstrating end-to-end agentic AI system design — from LLM tool orchestration and code execution to frontend UI and cloud deployment.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/naman-rai)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/naman-rai-634058299/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/Namanrai324)
 
 ---
