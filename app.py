@@ -157,7 +157,7 @@ if user_input and st.session_state.agent:
                             )
 
                     llm2 = ChatGroq(
-                        model="llama-3.3-70b-versatile",
+                        model=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"),
                         temperature=0,
                         api_key=os.getenv("GROQ_API_KEY")
                     )

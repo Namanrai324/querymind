@@ -1,84 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 #MainMenu, footer, header {visibility: hidden;}
 
 .stApp {
-    background: #0A0F1E !important;
-    font-family: 'Inter', sans-serif !important;
+    background: #090A0C !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 /* Sidebar */
 [data-testid="stSidebar"] {
-    background: #0D1428 !important;
-    border-right: 1px solid rgba(255,255,255,0.08) !important;
+    background: #111317 !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
 }
 
 /* All text */
 .stApp, .stApp p, .stApp span, .stApp label, .stApp div {
-    color: #F0F4FF !important;
+    color: #F9FAFB !important;
 }
 
 /* Buttons */
 .stButton > button {
     background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    color: #F0F4FF !important;
-    border-radius: 10px !important;
-    font-family: 'Inter', sans-serif !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #F9FAFB !important;
+    border-radius: 8px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 13px !important;
-    transition: all 0.25s ease !important;
+    transition: all 0.2s ease !important;
     padding: 8px 16px !important;
 }
 .stButton > button:hover {
-    background: rgba(108,99,255,0.2) !important;
-    border-color: #6C63FF !important;
+    background: rgba(245,158,11,0.15) !important;
+    border-color: #F59E0B !important;
+    color: #FBBF24 !important;
     transform: translateY(-1px) !important;
-    box-shadow: 0 8px 24px rgba(108,99,255,0.2) !important;
+    box-shadow: 0 4px 14px rgba(245,158,11,0.2) !important;
 }
 
 /* File uploader */
 [data-testid="stFileUploader"] {
-    background: rgba(255,255,255,0.03) !important;
-    border: 1.5px dashed rgba(255,255,255,0.1) !important;
-    border-radius: 14px !important;
-    padding: 8px !important;
+    background: rgba(255,255,255,0.02) !important;
+    border: 1.5px dashed rgba(255,255,255,0.12) !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
 }
 [data-testid="stFileUploader"]:hover {
-    border-color: #6C63FF !important;
-    background: rgba(108,99,255,0.06) !important;
+    border-color: #F59E0B !important;
+    background: rgba(245,158,11,0.05) !important;
 }
 
 /* Chat messages */
 [data-testid="stChatMessage"] {
-    background: rgba(255,255,255,0.03) !important;
+    background: #111317 !important;
     border: 1px solid rgba(255,255,255,0.07) !important;
-    border-radius: 16px !important;
-    margin-bottom: 10px !important;
+    border-radius: 14px !important;
+    margin-bottom: 12px !important;
     transition: box-shadow 0.25s ease !important;
     animation: msgIn 0.35s ease forwards !important;
 }
 [data-testid="stChatMessage"]:hover {
     box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
-    border-color: rgba(108,99,255,0.2) !important;
+    border-color: rgba(245,158,11,0.2) !important;
 }
 
 /* Chat input box */
 [data-testid="stChatInputTextArea"] {
     background: rgba(255,255,255,0.04) !important;
-    color: #F0F4FF !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #F9FAFB !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
     border-radius: 12px !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 [data-testid="stBottom"] {
-    background: rgba(10,15,30,0.95) !important;
+    background: rgba(9,10,12,0.95) !important;
     border-top: 1px solid rgba(255,255,255,0.06) !important;
     backdrop-filter: blur(20px) !important;
 }
 
 /* Metrics */
 [data-testid="stMetric"] {
-    background: rgba(255,255,255,0.03) !important;
+    background: #111317 !important;
     border: 1px solid rgba(255,255,255,0.07) !important;
     border-radius: 12px !important;
     padding: 16px !important;
@@ -87,16 +88,19 @@
 [data-testid="stMetric"]:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+    border-color: rgba(245,158,11,0.3) !important;
 }
 [data-testid="stMetricValue"] {
-    color: #6C63FF !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 28px !important;
+    color: #F59E0B !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 26px !important;
     font-weight: 700 !important;
 }
 [data-testid="stMetricLabel"] {
-    color: rgba(240,244,255,0.5) !important;
-    font-size: 12px !important;
+    color: #9CA3AF !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
 }
 
 /* Expander */
@@ -115,8 +119,8 @@
 /* Info/success boxes */
 [data-testid="stAlert"] {
     border-radius: 10px !important;
-    border: 1px solid rgba(108,99,255,0.2) !important;
-    background: rgba(108,99,255,0.08) !important;
+    border: 1px solid rgba(245,158,11,0.2) !important;
+    background: rgba(245,158,11,0.06) !important;
 }
 
 /* Divider */
@@ -128,7 +132,7 @@ hr {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #6C63FF; }
+::-webkit-scrollbar-thumb:hover { background: #F59E0B; }
 
 /* Animations */
 @keyframes msgIn {
@@ -138,10 +142,10 @@ hr {
 
 /* Gradient title */
 .gradient-title {
-    font-family: 'Space Grotesk', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 2rem !important;
     font-weight: 700 !important;
-    background: linear-gradient(135deg, #F0F4FF 0%, #6C63FF 100%);
+    background: linear-gradient(135deg, #F9FAFB 0%, #F59E0B 100%);
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
