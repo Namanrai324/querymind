@@ -22,8 +22,9 @@ def get_session_history(session_id: str):
 
 def build_agent(schema_info: str):
     llm = ChatGroq(
-        model="llama-3.3-70b-versatile",
+        model=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"),
         temperature=0,
+        max_tokens=4096,
         api_key=os.getenv("GROQ_API_KEY")
     )
 

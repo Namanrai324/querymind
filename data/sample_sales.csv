@@ -1,0 +1,501 @@
+Order_ID,Order_Date,Region,Customer_Segment,Category,Sub_Category,Sales,Quantity,Discount,Profit
+ORD-2024-10001,2024-04-16,North America,Small Business,Hardware & Devices,Conference Displays,5875.52,8,0.05,1526.52
+ORD-2024-10002,2024-03-28,North America,Mid-Market,Hardware & Devices,Smart Sensors,13544.64,12,0.05,4648.5
+ORD-2024-10003,2024-01-22,Latin America,Mid-Market,Cloud Infrastructure,Virtual Machines,801.0,12,0.1,85.4
+ORD-2024-10004,2024-02-20,EMEA,Small Business,Hardware & Devices,Smart Sensors,7638.12,12,0.0,2121.18
+ORD-2024-10005,2024-01-21,Asia Pacific,Small Business,Hardware & Devices,Edge Servers,1039.14,9,0.15,222.07
+ORD-2024-10006,2024-05-09,EMEA,Enterprise,Enterprise Software,CRM Suite,6391.8,20,0.15,1737.26
+ORD-2024-10007,2024-06-23,North America,Government,Hardware & Devices,Conference Displays,3284.43,3,0.15,859.68
+ORD-2024-10008,2024-01-04,EMEA,Mid-Market,Enterprise Software,ERP Connector,1679.04,22,0.05,247.98
+ORD-2024-10009,2024-01-14,EMEA,Mid-Market,Enterprise Software,Security Sentinel,6700.64,16,0.15,1287.89
+ORD-2024-10010,2024-01-24,Asia Pacific,Enterprise,Cloud Infrastructure,Object Storage,2645.11,13,0.25,404.44
+ORD-2024-10011,2024-05-15,Latin America,Enterprise,Hardware & Devices,Edge Servers,1351.92,24,0.1,442.55
+ORD-2024-10012,2024-02-10,North America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,7182.28,7,0.15,2147.43
+ORD-2024-10013,2024-05-30,Latin America,Small Business,Enterprise Software,CRM Suite,19499.28,24,0.15,5638.2
+ORD-2024-10014,2024-05-10,North America,Small Business,Cloud Infrastructure,Kubernetes Clusters,877.21,1,0.1,217.57
+ORD-2024-10015,2024-02-11,Asia Pacific,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,3561.87,13,0.0,894.07
+ORD-2024-10016,2024-05-22,Asia Pacific,Small Business,Enterprise Software,CRM Suite,3031.05,11,0.25,3.39
+ORD-2024-10017,2024-03-06,EMEA,Government,Hardware & Devices,Workstations,9774.2,10,0.0,2222.35
+ORD-2024-10018,2024-04-01,Asia Pacific,Government,Enterprise Software,ERP Connector,7643.44,7,0.0,958.17
+ORD-2024-10019,2024-04-25,EMEA,Enterprise,Cloud Infrastructure,Kubernetes Clusters,13499.85,13,0.1,852.38
+ORD-2024-10020,2024-02-28,Latin America,Government,Hardware & Devices,Smart Sensors,6462.94,22,0.0,1224.87
+ORD-2024-10021,2024-02-21,North America,Mid-Market,Cloud Infrastructure,Object Storage,3984.84,12,0.05,564.06
+ORD-2024-10022,2024-05-09,North America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,1723.48,22,0.0,508.24
+ORD-2024-10023,2024-02-22,EMEA,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,6713.16,12,0.15,1222.73
+ORD-2024-10024,2024-03-09,EMEA,Government,Cloud Infrastructure,Kubernetes Clusters,23615.4,20,0.1,3343.16
+ORD-2024-10025,2024-05-03,Latin America,Enterprise,Hardware & Devices,Conference Displays,5082.84,6,0.1,2034.73
+ORD-2024-10026,2024-05-26,Asia Pacific,Small Business,Hardware & Devices,Smart Sensors,15768.0,20,0.15,4621.7
+ORD-2024-10027,2024-02-08,Latin America,Government,Cloud Infrastructure,Virtual Machines,18211.32,18,0.1,2393.12
+ORD-2024-10028,2024-04-08,EMEA,Mid-Market,Hardware & Devices,Workstations,5639.06,7,0.05,1078.67
+ORD-2024-10029,2024-01-02,Latin America,Enterprise,Cloud Infrastructure,Networking Gateway,148.0,1,0.15,45.3
+ORD-2024-10030,2024-05-26,North America,Small Business,Hardware & Devices,Edge Servers,16354.08,16,0.15,3590.49
+ORD-2024-10031,2024-04-25,North America,Government,Enterprise Software,Security Sentinel,12378.74,11,0.15,2810.98
+ORD-2024-10032,2024-04-08,EMEA,Enterprise,Hardware & Devices,Conference Displays,4077.72,18,0.05,1323.64
+ORD-2024-10033,2024-06-17,Asia Pacific,Government,Enterprise Software,ERP Connector,3464.52,4,0.0,278.52
+ORD-2024-10034,2024-02-02,North America,Government,Hardware & Devices,Workstations,2378.56,16,0.1,507.27
+ORD-2024-10035,2024-06-06,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,7053.12,6,0.1,1734.24
+ORD-2024-10036,2024-01-28,EMEA,Enterprise,Enterprise Software,CRM Suite,9169.8,15,0.25,2333.22
+ORD-2024-10037,2024-02-18,Asia Pacific,Government,Hardware & Devices,Conference Displays,20292.56,17,0.25,-2936.75
+ORD-2024-10038,2024-04-04,EMEA,Enterprise,Cloud Infrastructure,Virtual Machines,3531.54,3,0.15,594.75
+ORD-2024-10039,2024-06-09,North America,Government,Hardware & Devices,Edge Servers,709.83,3,0.0,263.74
+ORD-2024-10040,2024-04-23,EMEA,Government,Hardware & Devices,Conference Displays,17826.9,15,0.05,3382.89
+ORD-2024-10041,2024-01-17,EMEA,Mid-Market,Hardware & Devices,Workstations,6788.32,8,0.1,1796.02
+ORD-2024-10042,2024-02-19,EMEA,Small Business,Enterprise Software,BI Analytics Pro,26384.64,24,0.05,11366.43
+ORD-2024-10043,2024-01-20,Latin America,Enterprise,Hardware & Devices,Edge Servers,122.29,1,0.15,5.48
+ORD-2024-10044,2024-03-03,Asia Pacific,Enterprise,Hardware & Devices,Smart Sensors,15958.14,22,0.0,7660.57
+ORD-2024-10045,2024-04-10,Asia Pacific,Mid-Market,Enterprise Software,ERP Connector,1000.33,1,0.15,260.14
+ORD-2024-10046,2024-04-03,Latin America,Government,Enterprise Software,CRM Suite,12771.45,15,0.15,949.83
+ORD-2024-10047,2024-06-06,Latin America,Mid-Market,Cloud Infrastructure,Object Storage,18285.98,19,0.1,2384.63
+ORD-2024-10048,2024-01-23,North America,Mid-Market,Cloud Infrastructure,Object Storage,7547.94,9,0.0,1707.58
+ORD-2024-10049,2024-02-03,North America,Small Business,Enterprise Software,ERP Connector,19116.46,22,0.25,-1619.26
+ORD-2024-10050,2024-03-26,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,2050.86,14,0.0,898.61
+ORD-2024-10051,2024-05-23,EMEA,Government,Enterprise Software,ERP Connector,15616.32,16,0.15,2783.42
+ORD-2024-10052,2024-03-09,EMEA,Mid-Market,Hardware & Devices,Smart Sensors,370.2,4,0.05,31.75
+ORD-2024-10053,2024-01-01,EMEA,Government,Enterprise Software,BI Analytics Pro,19297.92,24,0.15,5054.36
+ORD-2024-10054,2024-06-08,Latin America,Government,Enterprise Software,CRM Suite,14151.0,20,0.05,3465.48
+ORD-2024-10055,2024-06-27,North America,Enterprise,Hardware & Devices,Conference Displays,12453.1,11,0.1,3364.26
+ORD-2024-10056,2024-01-12,North America,Enterprise,Hardware & Devices,Conference Displays,855.96,14,0.1,282.94
+ORD-2024-10057,2024-03-30,Asia Pacific,Enterprise,Enterprise Software,BI Analytics Pro,3896.48,8,0.05,612.0
+ORD-2024-10058,2024-06-05,North America,Small Business,Cloud Infrastructure,Object Storage,21424.32,24,0.25,-2124.15
+ORD-2024-10059,2024-06-25,Latin America,Government,Cloud Infrastructure,Virtual Machines,1555.92,3,0.05,442.04
+ORD-2024-10060,2024-01-12,Latin America,Enterprise,Hardware & Devices,Smart Sensors,14086.54,17,0.0,798.79
+ORD-2024-10061,2024-04-22,EMEA,Enterprise,Hardware & Devices,Edge Servers,19973.8,20,0.25,3165.24
+ORD-2024-10062,2024-01-28,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,11550.7,14,0.15,3362.47
+ORD-2024-10063,2024-04-26,Asia Pacific,Government,Hardware & Devices,Smart Sensors,1900.6,5,0.0,127.57
+ORD-2024-10064,2024-02-08,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,14558.44,13,0.05,3766.3
+ORD-2024-10065,2024-05-12,Asia Pacific,Mid-Market,Hardware & Devices,Smart Sensors,3209.22,3,0.1,1001.31
+ORD-2024-10066,2024-06-22,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,3876.47,13,0.0,1161.11
+ORD-2024-10067,2024-01-05,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,1552.7,5,0.25,-230.46
+ORD-2024-10068,2024-04-17,Asia Pacific,Small Business,Enterprise Software,Security Sentinel,18873.8,22,0.05,3276.09
+ORD-2024-10069,2024-06-21,Asia Pacific,Mid-Market,Enterprise Software,BI Analytics Pro,6630.39,13,0.05,2155.68
+ORD-2024-10070,2024-05-10,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,4101.63,13,0.0,1362.56
+ORD-2024-10071,2024-02-25,North America,Enterprise,Hardware & Devices,Conference Displays,299.37,1,0.05,75.9
+ORD-2024-10072,2024-01-20,Asia Pacific,Small Business,Cloud Infrastructure,Networking Gateway,4190.58,18,0.0,1012.07
+ORD-2024-10073,2024-04-26,Asia Pacific,Enterprise,Enterprise Software,BI Analytics Pro,15791.6,22,0.0,3518.46
+ORD-2024-10074,2024-06-12,EMEA,Government,Cloud Infrastructure,Networking Gateway,3599.12,8,0.05,574.17
+ORD-2024-10075,2024-06-03,Latin America,Government,Cloud Infrastructure,Virtual Machines,1704.78,22,0.0,603.58
+ORD-2024-10076,2024-05-13,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,9419.4,18,0.25,-796.43
+ORD-2024-10077,2024-01-05,Asia Pacific,Enterprise,Enterprise Software,ERP Connector,11892.38,23,0.0,3340.26
+ORD-2024-10078,2024-03-26,EMEA,Small Business,Hardware & Devices,Edge Servers,17211.82,17,0.05,3897.26
+ORD-2024-10079,2024-05-28,Asia Pacific,Enterprise,Cloud Infrastructure,Kubernetes Clusters,2038.72,16,0.15,416.99
+ORD-2024-10080,2024-03-23,North America,Mid-Market,Cloud Infrastructure,Virtual Machines,5434.22,17,0.0,1334.85
+ORD-2024-10081,2024-01-04,Asia Pacific,Enterprise,Enterprise Software,CRM Suite,819.17,1,0.05,109.46
+ORD-2024-10082,2024-04-27,EMEA,Mid-Market,Enterprise Software,ERP Connector,1930.17,3,0.15,333.93
+ORD-2024-10083,2024-02-26,Latin America,Enterprise,Cloud Infrastructure,Object Storage,3322.82,17,0.25,1043.41
+ORD-2024-10084,2024-02-07,Latin America,Mid-Market,Enterprise Software,Security Sentinel,13037.4,18,0.1,4052.09
+ORD-2024-10085,2024-06-14,EMEA,Government,Hardware & Devices,Workstations,949.04,1,0.15,214.91
+ORD-2024-10086,2024-05-17,North America,Government,Cloud Infrastructure,Virtual Machines,24403.92,24,0.0,340.04
+ORD-2024-10087,2024-05-05,EMEA,Enterprise,Cloud Infrastructure,Object Storage,7836.29,11,0.1,2002.9
+ORD-2024-10088,2024-06-03,Latin America,Small Business,Cloud Infrastructure,Kubernetes Clusters,13288.5,18,0.1,1521.44
+ORD-2024-10089,2024-04-01,North America,Mid-Market,Hardware & Devices,Edge Servers,2453.3,10,0.25,813.18
+ORD-2024-10090,2024-02-14,North America,Mid-Market,Enterprise Software,ERP Connector,1323.54,9,0.0,695.91
+ORD-2024-10091,2024-04-16,Latin America,Mid-Market,Enterprise Software,BI Analytics Pro,1773.6,16,0.05,440.4
+ORD-2024-10092,2024-01-14,Latin America,Mid-Market,Hardware & Devices,Workstations,15094.21,23,0.05,3502.8
+ORD-2024-10093,2024-02-25,EMEA,Small Business,Cloud Infrastructure,Object Storage,16482.31,19,0.1,1829.45
+ORD-2024-10094,2024-01-15,Asia Pacific,Small Business,Enterprise Software,ERP Connector,10985.95,23,0.05,2604.34
+ORD-2024-10095,2024-03-26,North America,Small Business,Hardware & Devices,Edge Servers,3726.36,12,0.25,-348.69
+ORD-2024-10096,2024-02-03,Asia Pacific,Mid-Market,Hardware & Devices,Conference Displays,13570.65,15,0.0,4692.69
+ORD-2024-10097,2024-01-06,North America,Enterprise,Hardware & Devices,Smart Sensors,15785.2,20,0.05,3578.82
+ORD-2024-10098,2024-05-29,North America,Enterprise,Enterprise Software,CRM Suite,4563.72,21,0.15,168.51
+ORD-2024-10099,2024-04-03,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,25926.0,24,0.1,-1407.73
+ORD-2024-10100,2024-03-15,EMEA,Government,Hardware & Devices,Smart Sensors,184.6,4,0.0,59.47
+ORD-2024-10101,2024-03-02,EMEA,Small Business,Enterprise Software,Security Sentinel,1371.68,2,0.05,458.64
+ORD-2024-10102,2024-01-19,EMEA,Government,Enterprise Software,ERP Connector,12576.6,20,0.0,1868.78
+ORD-2024-10103,2024-03-04,EMEA,Mid-Market,Hardware & Devices,Edge Servers,4285.44,6,0.1,834.03
+ORD-2024-10104,2024-01-10,EMEA,Mid-Market,Hardware & Devices,Edge Servers,567.55,5,0.15,143.38
+ORD-2024-10105,2024-03-24,Latin America,Mid-Market,Enterprise Software,CRM Suite,201.04,1,0.0,61.03
+ORD-2024-10106,2024-04-04,Asia Pacific,Mid-Market,Enterprise Software,BI Analytics Pro,17456.28,17,0.15,6127.85
+ORD-2024-10107,2024-05-16,North America,Government,Enterprise Software,ERP Connector,500.46,2,0.1,118.02
+ORD-2024-10108,2024-01-14,Asia Pacific,Enterprise,Cloud Infrastructure,Networking Gateway,691.65,3,0.25,146.48
+ORD-2024-10109,2024-03-29,EMEA,Government,Enterprise Software,ERP Connector,9391.72,13,0.05,1873.52
+ORD-2024-10110,2024-06-14,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,907.23,1,0.0,359.38
+ORD-2024-10111,2024-02-22,North America,Small Business,Cloud Infrastructure,Virtual Machines,2445.36,8,0.1,35.03
+ORD-2024-10112,2024-01-15,EMEA,Government,Hardware & Devices,Conference Displays,11389.2,15,0.15,1434.94
+ORD-2024-10113,2024-06-05,Asia Pacific,Government,Enterprise Software,BI Analytics Pro,5476.74,6,0.25,1395.09
+ORD-2024-10114,2024-05-02,EMEA,Enterprise,Enterprise Software,ERP Connector,4368.1,10,0.25,449.71
+ORD-2024-10115,2024-01-15,Latin America,Government,Cloud Infrastructure,Networking Gateway,1711.2,8,0.15,517.32
+ORD-2024-10116,2024-02-05,Asia Pacific,Government,Hardware & Devices,Workstations,8083.57,11,0.15,2451.77
+ORD-2024-10117,2024-02-07,EMEA,Government,Hardware & Devices,Smart Sensors,3029.94,6,0.05,753.18
+ORD-2024-10118,2024-02-29,Asia Pacific,Government,Cloud Infrastructure,Virtual Machines,12333.86,11,0.15,5841.86
+ORD-2024-10119,2024-05-06,North America,Government,Cloud Infrastructure,Networking Gateway,9346.5,10,0.05,1462.49
+ORD-2024-10120,2024-03-03,North America,Enterprise,Enterprise Software,BI Analytics Pro,14120.7,22,0.25,1912.15
+ORD-2024-10121,2024-02-26,EMEA,Government,Cloud Infrastructure,Virtual Machines,15546.72,21,0.1,4789.05
+ORD-2024-10122,2024-06-10,EMEA,Small Business,Hardware & Devices,Smart Sensors,12257.0,17,0.1,-424.58
+ORD-2024-10123,2024-01-25,EMEA,Government,Hardware & Devices,Workstations,1624.0,7,0.25,-176.41
+ORD-2024-10124,2024-03-21,North America,Small Business,Enterprise Software,CRM Suite,11448.6,20,0.15,3148.51
+ORD-2024-10125,2024-04-13,Latin America,Small Business,Enterprise Software,ERP Connector,6588.01,17,0.25,-506.0
+ORD-2024-10126,2024-01-30,North America,Enterprise,Enterprise Software,CRM Suite,11123.52,16,0.05,112.54
+ORD-2024-10127,2024-04-22,Asia Pacific,Small Business,Cloud Infrastructure,Object Storage,11097.54,18,0.1,1986.35
+ORD-2024-10128,2024-02-01,Asia Pacific,Small Business,Cloud Infrastructure,Kubernetes Clusters,3540.6,10,0.05,657.33
+ORD-2024-10129,2024-02-01,Asia Pacific,Government,Cloud Infrastructure,Kubernetes Clusters,18822.78,18,0.0,852.62
+ORD-2024-10130,2024-03-12,Asia Pacific,Enterprise,Hardware & Devices,Workstations,9538.1,22,0.25,2009.57
+ORD-2024-10131,2024-06-10,Asia Pacific,Government,Cloud Infrastructure,Networking Gateway,966.24,3,0.1,179.93
+ORD-2024-10132,2024-03-14,EMEA,Small Business,Hardware & Devices,Conference Displays,6255.55,7,0.25,530.61
+ORD-2024-10133,2024-03-22,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,2192.64,2,0.25,149.68
+ORD-2024-10134,2024-01-05,Latin America,Government,Hardware & Devices,Workstations,2574.6,5,0.0,365.7
+ORD-2024-10135,2024-03-26,Latin America,Small Business,Enterprise Software,CRM Suite,2430.36,12,0.05,632.94
+ORD-2024-10136,2024-04-23,Latin America,Enterprise,Hardware & Devices,Conference Displays,12054.55,19,0.0,2948.86
+ORD-2024-10137,2024-01-22,North America,Small Business,Enterprise Software,CRM Suite,5820.98,11,0.05,472.18
+ORD-2024-10138,2024-05-25,Asia Pacific,Mid-Market,Hardware & Devices,Edge Servers,20694.66,21,0.0,5217.08
+ORD-2024-10139,2024-06-01,North America,Enterprise,Enterprise Software,ERP Connector,6015.0,6,0.25,-344.23
+ORD-2024-10140,2024-05-01,EMEA,Enterprise,Cloud Infrastructure,Virtual Machines,1322.72,14,0.15,481.72
+ORD-2024-10141,2024-02-05,North America,Small Business,Enterprise Software,BI Analytics Pro,6167.4,19,0.25,-731.9
+ORD-2024-10142,2024-04-20,EMEA,Small Business,Hardware & Devices,Smart Sensors,27041.28,24,0.25,-1835.16
+ORD-2024-10143,2024-03-21,Asia Pacific,Small Business,Hardware & Devices,Conference Displays,2852.46,13,0.0,564.04
+ORD-2024-10144,2024-03-01,North America,Enterprise,Cloud Infrastructure,Networking Gateway,8074.11,11,0.0,2172.76
+ORD-2024-10145,2024-04-17,Asia Pacific,Mid-Market,Hardware & Devices,Workstations,13950.36,12,0.05,2691.2
+ORD-2024-10146,2024-01-17,North America,Enterprise,Hardware & Devices,Workstations,8410.5,10,0.0,1353.52
+ORD-2024-10147,2024-03-23,EMEA,Government,Hardware & Devices,Conference Displays,6249.44,8,0.0,2464.48
+ORD-2024-10148,2024-03-29,North America,Mid-Market,Enterprise Software,Security Sentinel,3559.2,12,0.05,1242.49
+ORD-2024-10149,2024-02-01,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,7223.9,10,0.0,1969.16
+ORD-2024-10150,2024-04-26,EMEA,Small Business,Enterprise Software,BI Analytics Pro,2694.44,7,0.05,222.16
+ORD-2024-10151,2024-04-25,North America,Mid-Market,Hardware & Devices,Workstations,3975.79,7,0.1,255.42
+ORD-2024-10152,2024-06-19,Asia Pacific,Enterprise,Cloud Infrastructure,Object Storage,4412.8,8,0.15,1125.73
+ORD-2024-10153,2024-01-04,Latin America,Enterprise,Hardware & Devices,Workstations,9014.5,22,0.05,-665.15
+ORD-2024-10154,2024-06-18,Asia Pacific,Small Business,Enterprise Software,ERP Connector,129.34,2,0.25,-18.51
+ORD-2024-10155,2024-01-29,Asia Pacific,Mid-Market,Hardware & Devices,Workstations,8606.08,17,0.25,3561.14
+ORD-2024-10156,2024-04-12,EMEA,Enterprise,Cloud Infrastructure,Object Storage,17912.0,20,0.0,2900.95
+ORD-2024-10157,2024-06-06,EMEA,Government,Hardware & Devices,Edge Servers,6906.96,18,0.25,1221.69
+ORD-2024-10158,2024-06-19,North America,Enterprise,Hardware & Devices,Smart Sensors,7077.0,6,0.1,1707.65
+ORD-2024-10159,2024-02-21,EMEA,Enterprise,Enterprise Software,CRM Suite,1234.96,4,0.15,191.92
+ORD-2024-10160,2024-04-16,EMEA,Mid-Market,Hardware & Devices,Edge Servers,971.1,2,0.0,302.67
+ORD-2024-10161,2024-01-06,Asia Pacific,Government,Cloud Infrastructure,Object Storage,535.5,5,0.0,289.28
+ORD-2024-10162,2024-06-11,Asia Pacific,Mid-Market,Cloud Infrastructure,Virtual Machines,10976.04,18,0.0,3252.8
+ORD-2024-10163,2024-01-13,Asia Pacific,Mid-Market,Hardware & Devices,Conference Displays,21780.72,24,0.0,9272.07
+ORD-2024-10164,2024-03-07,North America,Government,Enterprise Software,BI Analytics Pro,823.32,9,0.05,356.28
+ORD-2024-10165,2024-01-25,Asia Pacific,Government,Enterprise Software,CRM Suite,4464.25,5,0.05,127.97
+ORD-2024-10166,2024-05-25,Latin America,Mid-Market,Hardware & Devices,Edge Servers,6936.36,6,0.25,-1033.8
+ORD-2024-10167,2024-03-02,North America,Government,Enterprise Software,Security Sentinel,18935.97,19,0.05,6699.99
+ORD-2024-10168,2024-03-20,Latin America,Small Business,Cloud Infrastructure,Object Storage,2596.24,8,0.1,597.96
+ORD-2024-10169,2024-04-16,North America,Enterprise,Hardware & Devices,Conference Displays,11037.91,13,0.05,2916.54
+ORD-2024-10170,2024-02-27,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,20134.68,19,0.05,3145.74
+ORD-2024-10171,2024-06-06,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,1585.36,7,0.15,576.86
+ORD-2024-10172,2024-02-15,Latin America,Enterprise,Hardware & Devices,Smart Sensors,11720.14,17,0.05,3130.62
+ORD-2024-10173,2024-06-06,Latin America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,4675.09,7,0.05,1710.26
+ORD-2024-10174,2024-05-27,North America,Mid-Market,Enterprise Software,CRM Suite,474.76,4,0.1,28.64
+ORD-2024-10175,2024-05-17,EMEA,Enterprise,Cloud Infrastructure,Networking Gateway,9706.84,22,0.05,4448.9
+ORD-2024-10176,2024-05-18,Asia Pacific,Enterprise,Cloud Infrastructure,Networking Gateway,415.39,1,0.1,56.53
+ORD-2024-10177,2024-06-22,Asia Pacific,Mid-Market,Hardware & Devices,Smart Sensors,2393.32,2,0.0,947.37
+ORD-2024-10178,2024-06-23,Latin America,Mid-Market,Hardware & Devices,Conference Displays,4296.04,14,0.1,977.91
+ORD-2024-10179,2024-04-01,North America,Mid-Market,Hardware & Devices,Workstations,22996.05,21,0.25,1599.3
+ORD-2024-10180,2024-05-03,North America,Mid-Market,Hardware & Devices,Workstations,1840.5,6,0.25,606.28
+ORD-2024-10181,2024-01-18,Latin America,Government,Cloud Infrastructure,Virtual Machines,8804.7,15,0.1,2227.72
+ORD-2024-10182,2024-05-10,EMEA,Mid-Market,Hardware & Devices,Workstations,932.76,12,0.15,233.74
+ORD-2024-10183,2024-01-15,Latin America,Mid-Market,Enterprise Software,BI Analytics Pro,10276.84,14,0.15,2479.61
+ORD-2024-10184,2024-04-26,Asia Pacific,Mid-Market,Cloud Infrastructure,Networking Gateway,1930.34,2,0.1,87.62
+ORD-2024-10185,2024-01-18,Latin America,Enterprise,Cloud Infrastructure,Virtual Machines,10741.14,18,0.1,3231.65
+ORD-2024-10186,2024-06-27,Latin America,Small Business,Enterprise Software,CRM Suite,5022.48,24,0.15,1242.54
+ORD-2024-10187,2024-03-20,Latin America,Small Business,Cloud Infrastructure,Object Storage,16655.32,22,0.15,5408.12
+ORD-2024-10188,2024-02-02,North America,Mid-Market,Enterprise Software,Security Sentinel,4020.57,9,0.0,646.17
+ORD-2024-10189,2024-04-12,EMEA,Mid-Market,Cloud Infrastructure,Networking Gateway,2347.72,2,0.05,799.94
+ORD-2024-10190,2024-02-18,Asia Pacific,Government,Enterprise Software,ERP Connector,6226.08,8,0.1,1763.96
+ORD-2024-10191,2024-03-13,North America,Mid-Market,Hardware & Devices,Smart Sensors,5257.14,7,0.0,1702.19
+ORD-2024-10192,2024-03-02,EMEA,Government,Enterprise Software,Security Sentinel,14778.0,15,0.1,3820.06
+ORD-2024-10193,2024-05-06,EMEA,Mid-Market,Enterprise Software,ERP Connector,261.81,3,0.15,43.54
+ORD-2024-10194,2024-05-20,Asia Pacific,Government,Enterprise Software,Security Sentinel,9805.38,13,0.1,2334.58
+ORD-2024-10195,2024-05-15,Latin America,Enterprise,Hardware & Devices,Smart Sensors,12489.92,23,0.1,929.1
+ORD-2024-10196,2024-02-04,Asia Pacific,Government,Cloud Infrastructure,Kubernetes Clusters,1662.32,22,0.0,638.02
+ORD-2024-10197,2024-06-07,North America,Mid-Market,Hardware & Devices,Conference Displays,12805.68,24,0.15,3753.68
+ORD-2024-10198,2024-04-14,Asia Pacific,Government,Enterprise Software,CRM Suite,296.4,4,0.05,93.53
+ORD-2024-10199,2024-01-06,EMEA,Government,Enterprise Software,BI Analytics Pro,2527.84,7,0.1,303.53
+ORD-2024-10200,2024-01-21,EMEA,Government,Hardware & Devices,Edge Servers,4702.8,15,0.05,341.49
+ORD-2024-10201,2024-01-14,EMEA,Government,Enterprise Software,BI Analytics Pro,8884.82,14,0.25,1578.83
+ORD-2024-10202,2024-03-24,EMEA,Government,Cloud Infrastructure,Kubernetes Clusters,301.0,2,0.0,114.6
+ORD-2024-10203,2024-03-06,North America,Government,Hardware & Devices,Edge Servers,2405.43,3,0.0,442.3
+ORD-2024-10204,2024-05-18,Asia Pacific,Small Business,Cloud Infrastructure,Kubernetes Clusters,1252.6,10,0.05,335.07
+ORD-2024-10205,2024-04-14,Latin America,Mid-Market,Cloud Infrastructure,Object Storage,561.34,1,0.1,42.65
+ORD-2024-10206,2024-06-13,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,17327.08,17,0.15,861.42
+ORD-2024-10207,2024-05-27,EMEA,Government,Hardware & Devices,Workstations,21322.08,18,0.0,6979.05
+ORD-2024-10208,2024-02-28,Asia Pacific,Small Business,Cloud Infrastructure,Virtual Machines,799.2,5,0.1,177.11
+ORD-2024-10209,2024-02-12,EMEA,Government,Enterprise Software,Security Sentinel,829.66,2,0.25,-76.74
+ORD-2024-10210,2024-05-05,Asia Pacific,Government,Enterprise Software,Security Sentinel,2684.63,13,0.05,944.42
+ORD-2024-10211,2024-03-25,Asia Pacific,Government,Enterprise Software,Security Sentinel,887.76,1,0.25,245.53
+ORD-2024-10212,2024-06-19,Asia Pacific,Small Business,Enterprise Software,CRM Suite,603.2,10,0.05,126.25
+ORD-2024-10213,2024-04-22,Latin America,Small Business,Cloud Infrastructure,Object Storage,2054.52,12,0.0,765.64
+ORD-2024-10214,2024-02-22,Latin America,Mid-Market,Hardware & Devices,Workstations,12726.88,16,0.05,4623.95
+ORD-2024-10215,2024-03-03,EMEA,Mid-Market,Enterprise Software,Security Sentinel,9405.63,9,0.0,2620.06
+ORD-2024-10216,2024-03-08,North America,Small Business,Cloud Infrastructure,Kubernetes Clusters,1017.6,2,0.15,251.38
+ORD-2024-10217,2024-03-22,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,12550.98,13,0.1,2277.85
+ORD-2024-10218,2024-05-22,Asia Pacific,Enterprise,Enterprise Software,ERP Connector,465.1,1,0.25,123.41
+ORD-2024-10219,2024-02-04,North America,Enterprise,Cloud Infrastructure,Virtual Machines,684.12,12,0.1,269.09
+ORD-2024-10220,2024-01-03,EMEA,Enterprise,Enterprise Software,ERP Connector,21870.87,21,0.05,7504.31
+ORD-2024-10221,2024-06-02,North America,Enterprise,Enterprise Software,Security Sentinel,2553.96,12,0.25,425.24
+ORD-2024-10222,2024-04-17,EMEA,Mid-Market,Hardware & Devices,Smart Sensors,672.65,11,0.1,26.57
+ORD-2024-10223,2024-05-03,Asia Pacific,Enterprise,Hardware & Devices,Conference Displays,4836.6,15,0.1,408.84
+ORD-2024-10224,2024-03-18,Asia Pacific,Mid-Market,Cloud Infrastructure,Object Storage,1351.44,4,0.15,209.25
+ORD-2024-10225,2024-06-04,North America,Small Business,Enterprise Software,BI Analytics Pro,2141.64,3,0.05,858.06
+ORD-2024-10226,2024-03-29,Latin America,Mid-Market,Cloud Infrastructure,Virtual Machines,2012.34,11,0.15,569.2
+ORD-2024-10227,2024-03-11,North America,Small Business,Enterprise Software,BI Analytics Pro,23048.4,24,0.25,-976.88
+ORD-2024-10228,2024-04-28,Asia Pacific,Enterprise,Enterprise Software,BI Analytics Pro,21785.72,22,0.15,4277.31
+ORD-2024-10229,2024-01-10,North America,Small Business,Cloud Infrastructure,Object Storage,12402.96,24,0.25,-821.82
+ORD-2024-10230,2024-02-29,Asia Pacific,Government,Enterprise Software,Security Sentinel,5700.52,7,0.05,1472.19
+ORD-2024-10231,2024-03-09,EMEA,Enterprise,Hardware & Devices,Conference Displays,4693.05,15,0.15,787.87
+ORD-2024-10232,2024-05-22,Latin America,Enterprise,Cloud Infrastructure,Object Storage,2232.69,3,0.1,591.62
+ORD-2024-10233,2024-06-01,EMEA,Enterprise,Enterprise Software,CRM Suite,716.94,2,0.25,-85.32
+ORD-2024-10234,2024-02-15,Latin America,Government,Hardware & Devices,Workstations,14054.87,19,0.05,6243.18
+ORD-2024-10235,2024-04-06,EMEA,Government,Hardware & Devices,Edge Servers,1050.28,4,0.0,170.24
+ORD-2024-10236,2024-01-05,Latin America,Mid-Market,Cloud Infrastructure,Virtual Machines,3733.32,12,0.25,260.76
+ORD-2024-10237,2024-05-04,EMEA,Government,Enterprise Software,BI Analytics Pro,782.34,3,0.05,327.54
+ORD-2024-10238,2024-02-13,Latin America,Mid-Market,Enterprise Software,Security Sentinel,4622.12,4,0.25,-277.81
+ORD-2024-10239,2024-02-24,EMEA,Enterprise,Enterprise Software,ERP Connector,662.88,16,0.15,133.87
+ORD-2024-10240,2024-04-24,Asia Pacific,Government,Enterprise Software,CRM Suite,505.84,8,0.15,122.98
+ORD-2024-10241,2024-03-24,EMEA,Enterprise,Cloud Infrastructure,Virtual Machines,2029.02,6,0.0,524.81
+ORD-2024-10242,2024-05-30,EMEA,Government,Enterprise Software,CRM Suite,7854.12,18,0.0,4208.93
+ORD-2024-10243,2024-03-15,Asia Pacific,Enterprise,Cloud Infrastructure,Object Storage,1501.5,3,0.05,408.86
+ORD-2024-10244,2024-03-26,Asia Pacific,Small Business,Hardware & Devices,Smart Sensors,2468.05,5,0.15,1131.07
+ORD-2024-10245,2024-03-22,EMEA,Mid-Market,Hardware & Devices,Edge Servers,6259.76,13,0.05,1618.04
+ORD-2024-10246,2024-05-22,EMEA,Enterprise,Hardware & Devices,Conference Displays,1397.76,21,0.1,350.48
+ORD-2024-10247,2024-01-20,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,14103.54,18,0.0,2162.61
+ORD-2024-10248,2024-03-05,Asia Pacific,Mid-Market,Cloud Infrastructure,Networking Gateway,15147.72,14,0.25,6310.98
+ORD-2024-10249,2024-05-20,EMEA,Enterprise,Hardware & Devices,Edge Servers,3806.04,21,0.25,-327.91
+ORD-2024-10250,2024-05-25,EMEA,Government,Cloud Infrastructure,Kubernetes Clusters,242.34,6,0.1,66.21
+ORD-2024-10251,2024-01-31,Latin America,Small Business,Enterprise Software,ERP Connector,13200.25,19,0.05,1973.33
+ORD-2024-10252,2024-02-25,North America,Small Business,Hardware & Devices,Smart Sensors,17716.05,15,0.1,3706.78
+ORD-2024-10253,2024-06-04,North America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,2200.94,14,0.15,790.49
+ORD-2024-10254,2024-02-21,Asia Pacific,Government,Cloud Infrastructure,Virtual Machines,16012.8,20,0.05,6112.15
+ORD-2024-10255,2024-03-02,Latin America,Small Business,Hardware & Devices,Edge Servers,1399.8,3,0.15,97.52
+ORD-2024-10256,2024-05-09,North America,Mid-Market,Cloud Infrastructure,Object Storage,1307.46,21,0.25,-69.2
+ORD-2024-10257,2024-03-22,North America,Enterprise,Hardware & Devices,Edge Servers,5765.55,5,0.15,359.94
+ORD-2024-10258,2024-04-26,North America,Government,Hardware & Devices,Workstations,4172.04,4,0.15,526.73
+ORD-2024-10259,2024-06-28,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,2971.08,6,0.05,450.79
+ORD-2024-10260,2024-01-29,Latin America,Government,Cloud Infrastructure,Object Storage,1015.41,1,0.05,351.89
+ORD-2024-10261,2024-02-03,Asia Pacific,Small Business,Cloud Infrastructure,Networking Gateway,8626.72,8,0.0,1407.37
+ORD-2024-10262,2024-06-20,North America,Government,Cloud Infrastructure,Kubernetes Clusters,554.2,1,0.25,108.16
+ORD-2024-10263,2024-06-27,North America,Enterprise,Hardware & Devices,Workstations,3893.52,24,0.0,305.04
+ORD-2024-10264,2024-05-14,Asia Pacific,Small Business,Hardware & Devices,Conference Displays,4841.77,19,0.1,537.75
+ORD-2024-10265,2024-04-05,North America,Mid-Market,Enterprise Software,CRM Suite,2779.6,8,0.15,616.38
+ORD-2024-10266,2024-06-26,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,542.43,3,0.15,124.25
+ORD-2024-10267,2024-05-01,North America,Enterprise,Enterprise Software,CRM Suite,2039.18,23,0.05,283.37
+ORD-2024-10268,2024-01-13,EMEA,Mid-Market,Hardware & Devices,Conference Displays,23258.34,21,0.15,3865.73
+ORD-2024-10269,2024-01-17,EMEA,Small Business,Enterprise Software,BI Analytics Pro,5874.4,8,0.0,673.34
+ORD-2024-10270,2024-06-06,EMEA,Mid-Market,Enterprise Software,CRM Suite,3618.8,20,0.1,13.15
+ORD-2024-10271,2024-05-01,Latin America,Enterprise,Enterprise Software,CRM Suite,24378.85,23,0.15,4557.71
+ORD-2024-10272,2024-05-15,North America,Mid-Market,Cloud Infrastructure,Object Storage,12390.7,14,0.15,2884.84
+ORD-2024-10273,2024-03-29,EMEA,Mid-Market,Hardware & Devices,Conference Displays,14649.58,22,0.25,-1897.13
+ORD-2024-10274,2024-03-28,Asia Pacific,Small Business,Hardware & Devices,Workstations,10680.6,12,0.1,2207.93
+ORD-2024-10275,2024-01-03,North America,Government,Cloud Infrastructure,Virtual Machines,15299.46,22,0.25,-1320.38
+ORD-2024-10276,2024-05-08,Latin America,Government,Enterprise Software,ERP Connector,10592.4,12,0.0,1453.73
+ORD-2024-10277,2024-04-07,Latin America,Mid-Market,Hardware & Devices,Conference Displays,4407.48,11,0.25,1078.89
+ORD-2024-10278,2024-06-12,North America,Enterprise,Cloud Infrastructure,Networking Gateway,22522.28,22,0.05,8849.04
+ORD-2024-10279,2024-01-14,North America,Mid-Market,Enterprise Software,Security Sentinel,1840.12,2,0.15,208.81
+ORD-2024-10280,2024-04-10,Latin America,Small Business,Hardware & Devices,Smart Sensors,1948.16,4,0.15,310.5
+ORD-2024-10281,2024-06-02,EMEA,Small Business,Enterprise Software,Security Sentinel,4045.65,5,0.25,-549.62
+ORD-2024-10282,2024-03-20,Asia Pacific,Government,Cloud Infrastructure,Object Storage,19674.43,23,0.05,1837.41
+ORD-2024-10283,2024-02-29,Asia Pacific,Small Business,Enterprise Software,ERP Connector,11741.62,19,0.1,2320.38
+ORD-2024-10284,2024-06-07,EMEA,Enterprise,Enterprise Software,ERP Connector,2560.12,4,0.25,356.39
+ORD-2024-10285,2024-05-25,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,2251.0,20,0.15,502.79
+ORD-2024-10286,2024-02-16,Latin America,Government,Cloud Infrastructure,Object Storage,7732.35,15,0.15,2032.29
+ORD-2024-10287,2024-05-23,North America,Mid-Market,Hardware & Devices,Workstations,1269.95,5,0.25,-147.3
+ORD-2024-10288,2024-05-26,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,10291.6,10,0.05,4312.31
+ORD-2024-10289,2024-06-13,North America,Government,Hardware & Devices,Edge Servers,19421.4,20,0.05,4774.31
+ORD-2024-10290,2024-02-08,EMEA,Small Business,Enterprise Software,Security Sentinel,19708.02,18,0.0,5515.03
+ORD-2024-10291,2024-02-29,EMEA,Mid-Market,Enterprise Software,CRM Suite,2364.12,12,0.15,567.52
+ORD-2024-10292,2024-06-06,Latin America,Mid-Market,Enterprise Software,Security Sentinel,7558.76,22,0.1,1731.88
+ORD-2024-10293,2024-05-17,EMEA,Government,Hardware & Devices,Conference Displays,7529.6,16,0.05,1304.56
+ORD-2024-10294,2024-04-16,Latin America,Government,Cloud Infrastructure,Virtual Machines,15177.0,20,0.1,4448.7
+ORD-2024-10295,2024-06-09,Latin America,Mid-Market,Cloud Infrastructure,Virtual Machines,981.75,7,0.05,263.16
+ORD-2024-10296,2024-06-18,Asia Pacific,Enterprise,Hardware & Devices,Conference Displays,11445.0,12,0.0,5067.7
+ORD-2024-10297,2024-03-09,North America,Mid-Market,Cloud Infrastructure,Object Storage,2643.54,3,0.25,-280.11
+ORD-2024-10298,2024-06-26,North America,Enterprise,Cloud Infrastructure,Virtual Machines,6328.77,21,0.05,3185.18
+ORD-2024-10299,2024-02-02,EMEA,Small Business,Cloud Infrastructure,Kubernetes Clusters,20015.8,17,0.25,4375.32
+ORD-2024-10300,2024-04-07,North America,Mid-Market,Enterprise Software,CRM Suite,537.21,1,0.25,-71.51
+ORD-2024-10301,2024-04-21,EMEA,Government,Enterprise Software,ERP Connector,15107.47,19,0.15,3113.97
+ORD-2024-10302,2024-03-03,Asia Pacific,Government,Hardware & Devices,Smart Sensors,4650.86,17,0.25,532.43
+ORD-2024-10303,2024-05-22,EMEA,Government,Hardware & Devices,Conference Displays,4474.8,24,0.15,748.33
+ORD-2024-10304,2024-01-26,EMEA,Government,Cloud Infrastructure,Networking Gateway,1215.67,17,0.0,366.37
+ORD-2024-10305,2024-04-06,Latin America,Government,Enterprise Software,BI Analytics Pro,6174.6,10,0.15,-128.5
+ORD-2024-10306,2024-01-11,North America,Small Business,Hardware & Devices,Workstations,6158.4,24,0.15,604.63
+ORD-2024-10307,2024-03-12,North America,Enterprise,Cloud Infrastructure,Networking Gateway,18066.5,23,0.05,5117.51
+ORD-2024-10308,2024-04-18,Latin America,Small Business,Enterprise Software,BI Analytics Pro,3242.22,3,0.1,403.96
+ORD-2024-10309,2024-01-08,Latin America,Enterprise,Enterprise Software,CRM Suite,4449.3,5,0.1,1443.25
+ORD-2024-10310,2024-05-16,Asia Pacific,Government,Enterprise Software,ERP Connector,10777.08,12,0.0,1774.45
+ORD-2024-10311,2024-01-21,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,5390.97,13,0.15,996.85
+ORD-2024-10312,2024-01-25,Asia Pacific,Enterprise,Hardware & Devices,Conference Displays,1955.34,3,0.0,700.57
+ORD-2024-10313,2024-05-12,EMEA,Mid-Market,Enterprise Software,ERP Connector,772.2,3,0.25,172.62
+ORD-2024-10314,2024-04-17,EMEA,Small Business,Cloud Infrastructure,Kubernetes Clusters,4851.72,12,0.05,975.98
+ORD-2024-10315,2024-01-30,Latin America,Government,Enterprise Software,BI Analytics Pro,13855.04,16,0.05,2781.56
+ORD-2024-10316,2024-03-22,Asia Pacific,Small Business,Enterprise Software,CRM Suite,8748.63,11,0.0,1714.57
+ORD-2024-10317,2024-01-15,Asia Pacific,Mid-Market,Cloud Infrastructure,Networking Gateway,228.27,3,0.25,-10.35
+ORD-2024-10318,2024-05-03,North America,Government,Hardware & Devices,Smart Sensors,1010.97,1,0.1,348.05
+ORD-2024-10319,2024-05-22,Asia Pacific,Mid-Market,Enterprise Software,CRM Suite,1648.5,21,0.25,-104.99
+ORD-2024-10320,2024-04-24,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,1054.1,1,0.1,168.98
+ORD-2024-10321,2024-04-29,Asia Pacific,Mid-Market,Hardware & Devices,Workstations,8036.28,14,0.15,859.17
+ORD-2024-10322,2024-03-24,Asia Pacific,Mid-Market,Hardware & Devices,Smart Sensors,1508.75,17,0.05,291.77
+ORD-2024-10323,2024-03-23,EMEA,Government,Enterprise Software,BI Analytics Pro,15350.86,14,0.05,4975.97
+ORD-2024-10324,2024-03-13,EMEA,Small Business,Cloud Infrastructure,Kubernetes Clusters,15131.7,23,0.1,4077.74
+ORD-2024-10325,2024-06-14,EMEA,Government,Hardware & Devices,Conference Displays,14011.41,21,0.0,193.02
+ORD-2024-10326,2024-03-18,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,862.65,9,0.15,149.91
+ORD-2024-10327,2024-03-26,North America,Mid-Market,Enterprise Software,CRM Suite,10685.43,9,0.25,-722.6
+ORD-2024-10328,2024-05-28,North America,Small Business,Enterprise Software,ERP Connector,1663.4,5,0.25,-83.89
+ORD-2024-10329,2024-03-08,North America,Enterprise,Cloud Infrastructure,Virtual Machines,3005.91,3,0.0,317.27
+ORD-2024-10330,2024-05-29,Latin America,Enterprise,Hardware & Devices,Smart Sensors,9118.48,8,0.15,1757.92
+ORD-2024-10331,2024-02-24,Asia Pacific,Government,Cloud Infrastructure,Virtual Machines,1349.32,7,0.15,239.95
+ORD-2024-10332,2024-06-10,EMEA,Government,Enterprise Software,Security Sentinel,27168.75,23,0.0,-1313.08
+ORD-2024-10333,2024-01-06,North America,Government,Enterprise Software,CRM Suite,2536.56,8,0.05,171.67
+ORD-2024-10334,2024-02-25,North America,Government,Hardware & Devices,Conference Displays,10866.74,17,0.0,2499.65
+ORD-2024-10335,2024-02-12,EMEA,Government,Enterprise Software,CRM Suite,3306.2,20,0.05,-144.87
+ORD-2024-10336,2024-05-05,Asia Pacific,Mid-Market,Enterprise Software,ERP Connector,4504.86,9,0.25,226.59
+ORD-2024-10337,2024-02-28,North America,Small Business,Cloud Infrastructure,Networking Gateway,4947.18,7,0.25,-702.8
+ORD-2024-10338,2024-01-19,Latin America,Government,Cloud Infrastructure,Virtual Machines,12761.04,12,0.25,-1351.26
+ORD-2024-10339,2024-01-08,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,1390.48,14,0.25,-177.34
+ORD-2024-10340,2024-06-04,Asia Pacific,Small Business,Enterprise Software,CRM Suite,7290.96,8,0.0,2253.59
+ORD-2024-10341,2024-06-15,Asia Pacific,Enterprise,Enterprise Software,BI Analytics Pro,1631.08,2,0.0,549.8
+ORD-2024-10342,2024-02-20,EMEA,Mid-Market,Cloud Infrastructure,Object Storage,3833.72,22,0.15,901.47
+ORD-2024-10343,2024-04-26,EMEA,Small Business,Hardware & Devices,Conference Displays,1309.58,2,0.1,121.11
+ORD-2024-10344,2024-06-11,EMEA,Government,Cloud Infrastructure,Virtual Machines,6641.36,11,0.25,1260.33
+ORD-2024-10345,2024-05-06,EMEA,Enterprise,Cloud Infrastructure,Virtual Machines,22710.2,23,0.15,7060.38
+ORD-2024-10346,2024-05-01,Asia Pacific,Enterprise,Hardware & Devices,Edge Servers,11593.44,12,0.1,2084.24
+ORD-2024-10347,2024-02-10,Latin America,Small Business,Hardware & Devices,Conference Displays,9427.47,23,0.05,1856.68
+ORD-2024-10348,2024-06-04,Asia Pacific,Mid-Market,Cloud Infrastructure,Networking Gateway,3945.3,5,0.25,-301.47
+ORD-2024-10349,2024-05-25,EMEA,Government,Hardware & Devices,Edge Servers,1305.3,3,0.1,44.63
+ORD-2024-10350,2024-06-10,North America,Government,Enterprise Software,Security Sentinel,4684.16,16,0.15,570.54
+ORD-2024-10351,2024-04-22,Asia Pacific,Government,Enterprise Software,CRM Suite,15178.15,13,0.1,1451.14
+ORD-2024-10352,2024-04-16,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,4987.0,10,0.1,1129.8
+ORD-2024-10353,2024-06-18,North America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,5045.8,5,0.25,-531.48
+ORD-2024-10354,2024-02-28,North America,Enterprise,Cloud Infrastructure,Virtual Machines,3237.6,15,0.0,865.99
+ORD-2024-10355,2024-03-08,Latin America,Mid-Market,Cloud Infrastructure,Networking Gateway,1094.05,5,0.0,96.1
+ORD-2024-10356,2024-05-10,Asia Pacific,Small Business,Cloud Infrastructure,Kubernetes Clusters,9991.1,10,0.25,1909.3
+ORD-2024-10357,2024-01-21,EMEA,Small Business,Cloud Infrastructure,Virtual Machines,12043.2,12,0.15,3637.83
+ORD-2024-10358,2024-04-07,North America,Small Business,Cloud Infrastructure,Kubernetes Clusters,3085.28,11,0.25,-421.25
+ORD-2024-10359,2024-01-19,Latin America,Mid-Market,Enterprise Software,CRM Suite,4438.75,5,0.15,1111.54
+ORD-2024-10360,2024-03-31,Asia Pacific,Government,Enterprise Software,BI Analytics Pro,15434.58,21,0.25,-644.75
+ORD-2024-10361,2024-01-05,Asia Pacific,Government,Enterprise Software,BI Analytics Pro,14104.56,17,0.0,3174.17
+ORD-2024-10362,2024-04-11,Asia Pacific,Mid-Market,Enterprise Software,BI Analytics Pro,3033.14,11,0.1,271.04
+ORD-2024-10363,2024-06-27,North America,Small Business,Hardware & Devices,Conference Displays,24730.86,21,0.05,11588.4
+ORD-2024-10364,2024-06-11,Asia Pacific,Enterprise,Hardware & Devices,Conference Displays,19128.0,16,0.15,1622.22
+ORD-2024-10365,2024-04-05,North America,Enterprise,Cloud Infrastructure,Virtual Machines,899.6,8,0.1,251.98
+ORD-2024-10366,2024-04-23,Asia Pacific,Small Business,Enterprise Software,CRM Suite,18430.72,22,0.1,-1871.86
+ORD-2024-10367,2024-03-04,EMEA,Mid-Market,Hardware & Devices,Smart Sensors,9578.31,21,0.05,3509.75
+ORD-2024-10368,2024-06-11,EMEA,Small Business,Enterprise Software,CRM Suite,5182.44,19,0.05,668.78
+ORD-2024-10369,2024-05-14,Asia Pacific,Mid-Market,Cloud Infrastructure,Networking Gateway,2687.79,3,0.0,447.1
+ORD-2024-10370,2024-05-07,Latin America,Enterprise,Cloud Infrastructure,Networking Gateway,8358.21,9,0.15,1866.45
+ORD-2024-10371,2024-01-23,Asia Pacific,Government,Hardware & Devices,Smart Sensors,7909.65,9,0.15,1068.85
+ORD-2024-10372,2024-06-21,Asia Pacific,Mid-Market,Hardware & Devices,Conference Displays,94.12,2,0.1,18.86
+ORD-2024-10373,2024-06-16,Latin America,Mid-Market,Hardware & Devices,Smart Sensors,10552.24,17,0.05,2241.77
+ORD-2024-10374,2024-04-20,EMEA,Enterprise,Enterprise Software,ERP Connector,731.94,2,0.1,30.21
+ORD-2024-10375,2024-02-08,Asia Pacific,Enterprise,Enterprise Software,CRM Suite,676.82,1,0.25,212.06
+ORD-2024-10376,2024-03-14,Latin America,Mid-Market,Hardware & Devices,Workstations,9928.6,10,0.15,1540.77
+ORD-2024-10377,2024-04-19,EMEA,Government,Enterprise Software,ERP Connector,7834.2,20,0.15,1911.75
+ORD-2024-10378,2024-02-03,Asia Pacific,Small Business,Enterprise Software,Security Sentinel,17920.44,18,0.1,2885.76
+ORD-2024-10379,2024-04-02,North America,Small Business,Cloud Infrastructure,Networking Gateway,6486.48,18,0.0,888.56
+ORD-2024-10380,2024-05-26,North America,Small Business,Hardware & Devices,Edge Servers,9157.95,9,0.15,2919.65
+ORD-2024-10381,2024-03-23,Asia Pacific,Enterprise,Enterprise Software,BI Analytics Pro,8120.56,17,0.15,1036.03
+ORD-2024-10382,2024-02-29,North America,Enterprise,Hardware & Devices,Smart Sensors,19775.52,24,0.25,-2224.12
+ORD-2024-10383,2024-01-17,Latin America,Small Business,Cloud Infrastructure,Networking Gateway,3419.8,4,0.0,904.18
+ORD-2024-10384,2024-02-17,North America,Enterprise,Cloud Infrastructure,Object Storage,4343.29,7,0.0,894.01
+ORD-2024-10385,2024-04-14,Latin America,Mid-Market,Hardware & Devices,Workstations,6512.66,7,0.05,-122.29
+ORD-2024-10386,2024-06-14,North America,Enterprise,Enterprise Software,Security Sentinel,9761.18,11,0.0,3910.67
+ORD-2024-10387,2024-06-10,North America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,1786.14,9,0.15,205.93
+ORD-2024-10388,2024-03-05,Latin America,Mid-Market,Cloud Infrastructure,Networking Gateway,556.0,4,0.1,187.68
+ORD-2024-10389,2024-04-27,North America,Enterprise,Hardware & Devices,Edge Servers,14044.8,22,0.15,3292.59
+ORD-2024-10390,2024-01-02,EMEA,Government,Cloud Infrastructure,Virtual Machines,18983.36,22,0.05,2954.2
+ORD-2024-10391,2024-04-11,Asia Pacific,Small Business,Hardware & Devices,Edge Servers,18547.68,17,0.15,3747.29
+ORD-2024-10392,2024-03-05,EMEA,Mid-Market,Enterprise Software,Security Sentinel,11354.2,20,0.0,2366.82
+ORD-2024-10393,2024-06-18,Asia Pacific,Mid-Market,Enterprise Software,Security Sentinel,14644.5,15,0.05,2903.29
+ORD-2024-10394,2024-01-07,North America,Small Business,Cloud Infrastructure,Virtual Machines,15691.2,20,0.15,1139.92
+ORD-2024-10395,2024-05-14,Latin America,Enterprise,Hardware & Devices,Edge Servers,4090.36,4,0.0,1601.1
+ORD-2024-10396,2024-02-14,Latin America,Government,Hardware & Devices,Edge Servers,4767.4,22,0.1,1122.29
+ORD-2024-10397,2024-06-04,North America,Mid-Market,Cloud Infrastructure,Virtual Machines,11791.52,13,0.15,2430.59
+ORD-2024-10398,2024-01-17,Latin America,Mid-Market,Hardware & Devices,Conference Displays,9106.68,12,0.0,2437.71
+ORD-2024-10399,2024-02-14,EMEA,Small Business,Enterprise Software,CRM Suite,3999.12,19,0.25,1045.01
+ORD-2024-10400,2024-06-23,North America,Enterprise,Hardware & Devices,Workstations,8626.2,20,0.15,1813.07
+ORD-2024-10401,2024-06-22,Asia Pacific,Enterprise,Cloud Infrastructure,Kubernetes Clusters,15129.18,18,0.05,1571.09
+ORD-2024-10402,2024-01-15,Asia Pacific,Mid-Market,Enterprise Software,ERP Connector,24281.88,21,0.05,5104.93
+ORD-2024-10403,2024-01-03,EMEA,Enterprise,Enterprise Software,ERP Connector,3340.98,6,0.15,784.35
+ORD-2024-10404,2024-02-19,Asia Pacific,Enterprise,Cloud Infrastructure,Networking Gateway,5440.16,11,0.15,1491.54
+ORD-2024-10405,2024-04-08,Latin America,Government,Enterprise Software,CRM Suite,8187.84,16,0.1,1810.99
+ORD-2024-10406,2024-01-19,North America,Mid-Market,Hardware & Devices,Edge Servers,2869.71,23,0.05,762.86
+ORD-2024-10407,2024-04-24,Latin America,Government,Enterprise Software,ERP Connector,1700.08,2,0.1,445.41
+ORD-2024-10408,2024-01-08,North America,Mid-Market,Hardware & Devices,Conference Displays,1307.64,4,0.0,316.84
+ORD-2024-10409,2024-03-24,North America,Small Business,Hardware & Devices,Workstations,22218.0,24,0.25,3373.24
+ORD-2024-10410,2024-06-18,Latin America,Government,Cloud Infrastructure,Networking Gateway,1027.73,11,0.05,234.24
+ORD-2024-10411,2024-03-31,Latin America,Government,Enterprise Software,BI Analytics Pro,11820.38,22,0.0,4090.6
+ORD-2024-10412,2024-06-03,Latin America,Enterprise,Cloud Infrastructure,Object Storage,2384.36,2,0.0,509.94
+ORD-2024-10413,2024-05-27,North America,Small Business,Cloud Infrastructure,Kubernetes Clusters,1634.64,21,0.1,370.83
+ORD-2024-10414,2024-04-25,EMEA,Enterprise,Enterprise Software,CRM Suite,14113.2,20,0.05,4163.41
+ORD-2024-10415,2024-06-02,North America,Mid-Market,Cloud Infrastructure,Object Storage,15213.51,13,0.05,4313.59
+ORD-2024-10416,2024-01-22,North America,Enterprise,Cloud Infrastructure,Object Storage,1656.56,2,0.0,528.28
+ORD-2024-10417,2024-05-18,North America,Government,Cloud Infrastructure,Networking Gateway,17109.6,24,0.1,5407.22
+ORD-2024-10418,2024-03-11,Asia Pacific,Small Business,Cloud Infrastructure,Networking Gateway,4040.72,8,0.15,629.12
+ORD-2024-10419,2024-04-25,Latin America,Small Business,Hardware & Devices,Smart Sensors,9434.23,13,0.0,3108.88
+ORD-2024-10420,2024-03-08,EMEA,Enterprise,Enterprise Software,Security Sentinel,15903.3,15,0.0,715.58
+ORD-2024-10421,2024-02-09,Latin America,Small Business,Hardware & Devices,Workstations,3378.4,4,0.05,794.61
+ORD-2024-10422,2024-04-25,North America,Government,Cloud Infrastructure,Kubernetes Clusters,25759.31,23,0.25,-966.01
+ORD-2024-10423,2024-04-10,EMEA,Mid-Market,Cloud Infrastructure,Networking Gateway,2726.5,10,0.25,238.04
+ORD-2024-10424,2024-02-07,Latin America,Government,Hardware & Devices,Conference Displays,15373.47,19,0.0,2307.81
+ORD-2024-10425,2024-02-19,Asia Pacific,Mid-Market,Cloud Infrastructure,Virtual Machines,4333.2,5,0.1,647.41
+ORD-2024-10426,2024-02-08,EMEA,Government,Hardware & Devices,Workstations,14638.88,16,0.25,-795.33
+ORD-2024-10427,2024-02-01,Asia Pacific,Mid-Market,Hardware & Devices,Workstations,1891.06,2,0.0,629.79
+ORD-2024-10428,2024-02-17,North America,Government,Enterprise Software,CRM Suite,15466.2,20,0.1,1010.0
+ORD-2024-10429,2024-03-05,EMEA,Enterprise,Cloud Infrastructure,Virtual Machines,8899.03,19,0.0,848.15
+ORD-2024-10430,2024-01-01,Asia Pacific,Small Business,Hardware & Devices,Conference Displays,12685.95,15,0.25,-866.87
+ORD-2024-10431,2024-05-20,North America,Enterprise,Hardware & Devices,Edge Servers,2575.86,6,0.15,719.21
+ORD-2024-10432,2024-03-21,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,1799.1,3,0.15,576.42
+ORD-2024-10433,2024-04-25,Asia Pacific,Small Business,Enterprise Software,CRM Suite,159.72,3,0.05,56.0
+ORD-2024-10434,2024-06-05,Latin America,Small Business,Hardware & Devices,Conference Displays,16324.42,19,0.0,4629.19
+ORD-2024-10435,2024-01-27,Asia Pacific,Enterprise,Cloud Infrastructure,Networking Gateway,16650.56,16,0.25,-1795.19
+ORD-2024-10436,2024-02-26,EMEA,Small Business,Enterprise Software,Security Sentinel,611.15,5,0.1,147.18
+ORD-2024-10437,2024-06-27,Asia Pacific,Small Business,Enterprise Software,Security Sentinel,5887.98,18,0.15,464.32
+ORD-2024-10438,2024-02-26,North America,Enterprise,Cloud Infrastructure,Object Storage,10393.46,14,0.1,1757.1
+ORD-2024-10439,2024-01-19,EMEA,Government,Cloud Infrastructure,Object Storage,9364.3,22,0.05,1598.01
+ORD-2024-10440,2024-05-14,Latin America,Mid-Market,Cloud Infrastructure,Virtual Machines,2621.7,15,0.1,212.34
+ORD-2024-10441,2024-01-29,Latin America,Government,Enterprise Software,CRM Suite,8652.72,24,0.05,2372.23
+ORD-2024-10442,2024-06-04,EMEA,Enterprise,Enterprise Software,ERP Connector,8063.55,9,0.05,1799.57
+ORD-2024-10443,2024-03-11,Asia Pacific,Enterprise,Cloud Infrastructure,Virtual Machines,834.57,3,0.0,274.68
+ORD-2024-10444,2024-06-19,EMEA,Mid-Market,Enterprise Software,ERP Connector,2973.9,23,0.25,-134.38
+ORD-2024-10445,2024-05-26,Latin America,Government,Cloud Infrastructure,Object Storage,2936.6,20,0.05,1067.89
+ORD-2024-10446,2024-02-28,Asia Pacific,Government,Enterprise Software,CRM Suite,2089.34,2,0.0,755.59
+ORD-2024-10447,2024-02-22,North America,Mid-Market,Hardware & Devices,Smart Sensors,4307.7,15,0.1,830.48
+ORD-2024-10448,2024-01-25,EMEA,Mid-Market,Enterprise Software,Security Sentinel,6674.98,13,0.0,1823.71
+ORD-2024-10449,2024-05-16,Asia Pacific,Enterprise,Cloud Infrastructure,Networking Gateway,4520.0,4,0.05,1609.92
+ORD-2024-10450,2024-06-24,Latin America,Mid-Market,Enterprise Software,Security Sentinel,949.2,6,0.05,180.27
+ORD-2024-10451,2024-03-25,EMEA,Small Business,Hardware & Devices,Smart Sensors,5101.65,15,0.25,-322.84
+ORD-2024-10452,2024-06-26,North America,Mid-Market,Hardware & Devices,Edge Servers,5533.4,20,0.0,1714.77
+ORD-2024-10453,2024-06-28,Asia Pacific,Government,Cloud Infrastructure,Kubernetes Clusters,1113.3,15,0.0,173.86
+ORD-2024-10454,2024-06-26,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,869.4,3,0.0,117.84
+ORD-2024-10455,2024-02-17,EMEA,Mid-Market,Hardware & Devices,Conference Displays,23290.95,23,0.1,433.97
+ORD-2024-10456,2024-03-05,EMEA,Mid-Market,Enterprise Software,BI Analytics Pro,20607.54,23,0.1,4329.25
+ORD-2024-10457,2024-05-13,North America,Enterprise,Enterprise Software,ERP Connector,7309.17,11,0.0,1385.47
+ORD-2024-10458,2024-06-16,Asia Pacific,Government,Enterprise Software,BI Analytics Pro,2642.52,4,0.1,959.66
+ORD-2024-10459,2024-04-07,Latin America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,20915.62,22,0.05,3122.62
+ORD-2024-10460,2024-05-08,Latin America,Government,Enterprise Software,Security Sentinel,19941.69,23,0.05,4556.01
+ORD-2024-10461,2024-03-25,EMEA,Mid-Market,Cloud Infrastructure,Virtual Machines,10224.8,16,0.0,3119.84
+ORD-2024-10462,2024-03-24,North America,Small Business,Hardware & Devices,Workstations,3193.9,19,0.25,276.28
+ORD-2024-10463,2024-06-01,EMEA,Small Business,Hardware & Devices,Conference Displays,18928.14,21,0.05,5355.39
+ORD-2024-10464,2024-04-05,Latin America,Small Business,Hardware & Devices,Smart Sensors,2095.1,5,0.05,608.39
+ORD-2024-10465,2024-03-20,EMEA,Small Business,Cloud Infrastructure,Object Storage,409.59,1,0.25,-24.29
+ORD-2024-10466,2024-03-16,EMEA,Small Business,Enterprise Software,CRM Suite,13242.02,23,0.0,-222.89
+ORD-2024-10467,2024-06-13,North America,Enterprise,Hardware & Devices,Smart Sensors,5702.39,23,0.15,920.53
+ORD-2024-10468,2024-05-13,Latin America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,7647.84,12,0.0,1564.67
+ORD-2024-10469,2024-06-08,EMEA,Small Business,Enterprise Software,CRM Suite,10627.3,10,0.05,1478.46
+ORD-2024-10470,2024-01-11,EMEA,Government,Enterprise Software,CRM Suite,3270.96,14,0.1,604.83
+ORD-2024-10471,2024-05-31,EMEA,Government,Enterprise Software,BI Analytics Pro,9472.4,8,0.0,470.61
+ORD-2024-10472,2024-06-23,EMEA,Government,Hardware & Devices,Workstations,2391.6,10,0.05,32.74
+ORD-2024-10473,2024-05-08,North America,Mid-Market,Enterprise Software,BI Analytics Pro,131.36,2,0.25,-11.41
+ORD-2024-10474,2024-03-09,Asia Pacific,Enterprise,Enterprise Software,CRM Suite,14067.84,17,0.05,6304.98
+ORD-2024-10475,2024-03-02,North America,Enterprise,Cloud Infrastructure,Kubernetes Clusters,17586.16,17,0.1,8776.3
+ORD-2024-10476,2024-05-03,Latin America,Mid-Market,Cloud Infrastructure,Kubernetes Clusters,825.28,16,0.15,74.75
+ORD-2024-10477,2024-04-02,Latin America,Enterprise,Cloud Infrastructure,Networking Gateway,22401.72,22,0.1,3900.83
+ORD-2024-10478,2024-05-26,North America,Small Business,Hardware & Devices,Smart Sensors,1018.6,2,0.1,145.93
+ORD-2024-10479,2024-02-26,EMEA,Mid-Market,Hardware & Devices,Edge Servers,463.92,8,0.05,150.64
+ORD-2024-10480,2024-02-18,Latin America,Enterprise,Hardware & Devices,Conference Displays,7313.28,13,0.25,-630.88
+ORD-2024-10481,2024-03-07,EMEA,Enterprise,Cloud Infrastructure,Kubernetes Clusters,2302.8,19,0.1,277.28
+ORD-2024-10482,2024-04-05,Asia Pacific,Small Business,Hardware & Devices,Smart Sensors,11048.29,11,0.0,4583.38
+ORD-2024-10483,2024-03-01,Asia Pacific,Government,Cloud Infrastructure,Networking Gateway,16228.08,24,0.0,661.17
+ORD-2024-10484,2024-03-02,Latin America,Enterprise,Enterprise Software,CRM Suite,5781.09,7,0.15,2252.33
+ORD-2024-10485,2024-02-13,North America,Small Business,Cloud Infrastructure,Kubernetes Clusters,5659.36,7,0.15,519.97
+ORD-2024-10486,2024-03-04,Asia Pacific,Enterprise,Hardware & Devices,Workstations,4116.0,4,0.25,-226.81
+ORD-2024-10487,2024-02-23,North America,Small Business,Enterprise Software,CRM Suite,4393.76,16,0.1,1133.93
+ORD-2024-10488,2024-05-17,EMEA,Government,Enterprise Software,ERP Connector,10860.84,12,0.0,1005.37
+ORD-2024-10489,2024-04-24,EMEA,Government,Enterprise Software,ERP Connector,18515.69,23,0.0,6502.57
+ORD-2024-10490,2024-03-01,EMEA,Small Business,Hardware & Devices,Workstations,653.32,1,0.15,60.07
+ORD-2024-10491,2024-06-03,EMEA,Enterprise,Cloud Infrastructure,Object Storage,3982.28,4,0.05,1382.15
+ORD-2024-10492,2024-03-24,EMEA,Government,Hardware & Devices,Workstations,4537.45,5,0.0,1381.48
+ORD-2024-10493,2024-03-10,Asia Pacific,Mid-Market,Cloud Infrastructure,Virtual Machines,22483.02,21,0.25,-1928.16
+ORD-2024-10494,2024-06-05,Latin America,Government,Enterprise Software,BI Analytics Pro,8368.78,7,0.05,2247.61
+ORD-2024-10495,2024-05-04,Asia Pacific,Enterprise,Enterprise Software,Security Sentinel,900.6,6,0.15,239.07
+ORD-2024-10496,2024-04-04,Asia Pacific,Small Business,Hardware & Devices,Edge Servers,5890.2,15,0.25,1612.54
+ORD-2024-10497,2024-06-06,North America,Small Business,Hardware & Devices,Workstations,6434.4,16,0.05,710.24
+ORD-2024-10498,2024-04-08,Latin America,Small Business,Hardware & Devices,Workstations,2293.65,3,0.25,-186.8
+ORD-2024-10499,2024-06-19,Asia Pacific,Small Business,Cloud Infrastructure,Virtual Machines,1721.16,2,0.1,678.77
+ORD-2024-10500,2024-01-28,Asia Pacific,Mid-Market,Hardware & Devices,Conference Displays,3871.8,5,0.25,-572.55

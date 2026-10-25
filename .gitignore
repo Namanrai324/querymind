@@ -4,5 +4,8 @@ __pycache__/
 .env
 *.db
 chart_*.png
+chart.png
+test_chart.png
+static/chart_*.png
 querymind_temp.db
 .streamlit/

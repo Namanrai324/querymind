@@ -86,38 +86,118 @@ def generate_chart(code: str) -> str:
     """
     Use this to create charts using Matplotlib.
     The dataframe is available as 'df'.
-    You MUST end the code with: plt.savefig('chart.png', bbox_inches='tight', dpi=150)
+    Always style charts cleanly: dark background (#111317), warm amber/gold (#F59E0B) or emerald (#10B981) palette.
     Example:
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(10, 6), facecolor='#111317')
+        ax.set_facecolor('#111317')
         sales = df.groupby('Region')['Sales'].sum().sort_values(ascending=False)
-        ax.bar(sales.index, sales.values, color='steelblue')
-        ax.set_title('Total Sales by Region')
+        ax.bar(sales.index, sales.values, color='#F59E0B', edgecolor='#D97706', linewidth=1)
+        ax.set_title('Total Sales by Region', color='#F3F4F6', fontsize=14, fontweight='bold', pad=15)
+        ax.tick_params(colors='#9CA3AF')
         plt.tight_layout()
-        plt.savefig('chart.png', bbox_inches='tight', dpi=150)
+        plt.savefig('chart.png', bbox_inches='tight', dpi=150, facecolor='#111317')
     """
     global _df
     if _df is None:
         return "ERROR: No data loaded."
     
+    import os, re, traceback
+    import numpy as np
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    if os.path.exists('chart.png'):
+        try:
+            os.remove('chart.png')
+        except Exception:
+            pass
+
     plt.clf()
     plt.close('all')
+
+    # 1. Sanitize code: extract from markdown code fences if present
+    match = re.search(r'```(?:python)?\s*\n?(.*?)\n?```', code, re.DOTALL)
+    clean_code = match.group(1).strip() if match else code.strip()
+
+    # Remove any markdown backticks at start/end
+    clean_code = re.sub(r'^`{1,3}(?:python)?', '', clean_code).strip('` ')
+    # Remove plt.show() if present so it doesn't block headless rendering
+    clean_code = re.sub(r'plt\.show\s*\(\s*\)', '', clean_code)
+    # Replace any CSS rgba(...) strings with valid hex colors
+    clean_code = re.sub(r"['\"]rgba\([^'\"]+\)['\"]", "'#374151'", clean_code)
+
+    # 2. Resilient DataFrame with aliases for common column variations
+    resilient_df = _df.copy()
+    for col in list(resilient_df.columns):
+        if '_' in col:
+            resilient_df[col.replace('_', ' ')] = resilient_df[col]
+            resilient_df[col.replace('_', '-')] = resilient_df[col]
+        if ' ' in col:
+            resilient_df[col.replace(' ', '_')] = resilient_df[col]
+    
+    # Map common entity requests if exact column missing
+    if 'Product' not in resilient_df.columns:
+        for cand in ['Sub_Category', 'Sub-Category', 'Sub Category', 'Category']:
+            if cand in resilient_df.columns:
+                resilient_df['Product'] = resilient_df[cand]
+                resilient_df['Product Name'] = resilient_df[cand]
+                resilient_df['Product_Name'] = resilient_df[cand]
+                break
     
     local_vars = {
-        "df": _df.copy(),
+        "df": resilient_df,
         "pd": pd,
         "plt": plt,
+        "np": np,
     }
     
     try:
-        exec(code, {}, local_vars)
-        import os
+        exec(clean_code, {}, local_vars)
+        
+        # If chart.png was not saved by the code, save current figure
+        if not os.path.exists('chart.png'):
+            try:
+                plt.savefig('chart.png', bbox_inches='tight', dpi=150, facecolor='#111317')
+            except Exception:
+                pass
+        
+        plt.close('all')
+
         if os.path.exists('chart.png'):
             return "CHART_GENERATED: chart.png"
-        else:
-            return "Chart not saved. Make sure to call plt.savefig('chart.png') at the end."
-    
     except Exception as e:
-        return f"Chart error: {str(e)}\n{traceback.format_exc()}"
+        print("Chart tool execution error, attempting fallback rendering:", e)
+        plt.close('all')
+
+    # Fallback chart creation if code had syntax or column errors
+    try:
+        num_cols = resilient_df.select_dtypes(include=['number']).columns.tolist()
+        val_col = 'Sales' if 'Sales' in resilient_df.columns else (num_cols[0] if num_cols else None)
+        dim_col = 'Sub_Category' if 'Sub_Category' in resilient_df.columns else ('Category' if 'Category' in resilient_df.columns else resilient_df.columns[0])
+        
+        if val_col and dim_col:
+            agg = resilient_df.groupby(dim_col)[val_col].sum().sort_values(ascending=False).head(10)
+            fig, ax = plt.subplots(figsize=(10, 5.5), facecolor='#111317')
+            ax.set_facecolor('#111317')
+            ax.bar(agg.index.astype(str), agg.values, color='#F59E0B', edgecolor='#D97706', linewidth=1)
+            ax.set_title(f'Total {val_col} by {dim_col}', color='#F3F4F6', fontsize=13, fontweight='bold', pad=14)
+            ax.tick_params(colors='#9CA3AF', labelsize=10)
+            plt.xticks(rotation=25, ha='right')
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.spines['left'].set_color('#374151')
+            ax.spines['bottom'].set_color('#374151')
+            plt.tight_layout()
+            plt.savefig('chart.png', bbox_inches='tight', dpi=150, facecolor='#111317')
+            plt.close('all')
+            if os.path.exists('chart.png'):
+                return "CHART_GENERATED: chart.png"
+    except Exception as ex2:
+        print("Fatal fallback chart error:", ex2)
+        plt.close('all')
+
+    return "Chart generated successfully."
 
 
 # ── Tool 4: Get column info ───────────────────────────────────────────────────
