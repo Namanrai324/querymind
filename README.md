@@ -19,6 +19,16 @@
 
 ---
 
+## 🌐 Live Demo
+
+Experience QueryMind directly in your browser without any installation:
+
+👉 **[Launch QueryMind Live Studio](https://querymind-lclb.onrender.com)**
+
+> **Note:** The application is hosted live on Render's cloud infrastructure. If the instance has been idle, please allow 30–50 seconds for the container to spin up automatically on your first visit.
+
+---
+
 ## 📌 Overview
 
 **QueryMind** is a fully agentic business intelligence assistant that transforms how non-technical users interact with data. Upload any CSV or Excel file, ask a question in plain English, and QueryMind autonomously writes and executes Pandas/SQL code, generates charts, spots anomalies, and explains insights — all in seconds.
@@ -261,15 +271,25 @@ Upload the [Superstore Sales dataset](https://www.kaggle.com/datasets/vivek468/s
 
 ---
 
-## 🚀 Deployment
+## 🚀 Deployment & Live Demo
 
-The app is deployed on **Render** with auto-deploy from GitHub.
+The application is deployed on **Render** with continuous delivery (CD) directly from GitHub:
 
-Every `git push` to `main` automatically triggers a new deployment.
+- 🌐 **Live Demo URL:** [https://querymind-lclb.onrender.com](https://querymind-lclb.onrender.com)
+- 🔄 Every `git push` to `main` automatically builds and deploys the latest version.
 
-**Environment Variables required on Render:**
-```
-GROQ_API_KEY = your_groq_api_key
+### Render Configuration
+| Parameter | Value |
+|---|---|
+| **Runtime** | `Python 3` |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `uvicorn api:app --host 0.0.0.0 --port $PORT` |
+
+**Required Environment Variables:**
+```env
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=qwen/qwen3.8-27b
+PYTHON_VERSION=3.10.12
 ```
 
 ---
